@@ -6,11 +6,11 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 13:09:43 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/07 16:21:04 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/07 18:35:29 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/new_minishell.h"
+#include "../includes/minishell.h"
 
 int         ft_find_var_in_av(char **av, char *str)
 {

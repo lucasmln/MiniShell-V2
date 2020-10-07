@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_minishell.h                                    :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/07 12:17:15 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/07 16:52:18 by lmoulin          ###   ########.fr       */
+/*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
+/*   Updated: 2020/10/07 19:48:25 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NEW_MINISHELL
-# define NEW_MINISHELL
+#ifndef MINISHELL
+# define MINISHELL
 
 # include <unistd.h>
 # include <sys/types.h>
@@ -21,9 +21,9 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <dirent.h>
-# include "../../../libft/ft_printf/ft_printf.h"
+# include "ft_printf.h"
 # include "color.h"
-# include "../../../libft/libft/libft.h"
+# include "libft.h"
 
 # define BUF_SIZE 2048
 # define FD_MAX 512
@@ -33,6 +33,7 @@
 typedef struct		s_minishell
 {
 	char	buf[BUF_SIZE + 1];
+	char	*str;
 	char	*dir;
 	char	**env;
 	int		len_env;
@@ -99,6 +100,12 @@ void        ft_check_env_var(void);
  ** splitter.c
 */
 
-char		*ft_set_parse(char *buf);
+int			ft_set_parse(char *buf);
+
+/*
+ ** free.c
+*/
+void        ft_free_av(char **av);
+void        ft_free_all();
 
 #endif

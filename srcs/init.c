@@ -6,11 +6,11 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:50:22 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/07 15:34:28 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/07 18:35:33 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/new_minishell.h"
+#include "../includes/minishell.h"
 
 void		ft_init_fd_tab(void)
 {

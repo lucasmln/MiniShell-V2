@@ -6,11 +6,11 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 13:43:00 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/07 16:49:13 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/07 19:58:40 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/new_minishell.h"
+#include "../includes/minishell.h"
 
 char        *ft_str_add(char *s1, char *s2)
 {
@@ -53,8 +53,17 @@ void        ft_go_to_char(char *s, int *i, char c)
 int         ft_free_error(int code)
 {
     if (code == ERR_SEMI_COLONS)
+    {
         ft_printf(1, "minishell: syntax error ';'\n");
+        ft_strdel(&g_shell.str);
+        ft_free_av(g_shell.semi_colon);
+    }
     else if (code == ERR_PIPE)
+    {
         ft_printf(1, "minishell: syntax error '|'\n");
+        ft_strdel(&g_shell.str);
+        ft_free_av(g_shell.semi_colon);
+        ft_free_av(g_shell.pip_str);
+    }
     return (0);
 }

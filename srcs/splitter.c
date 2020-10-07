@@ -6,13 +6,13 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/07 16:53:01 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/07 19:58:02 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/new_minishell.h"
+#include "../includes/minishell.h"
 
-char		*ft_set_parse(char *buf)
+int			ft_set_parse(char *buf)
 {
 	char		*tmp;
 	int			i;
@@ -25,7 +25,7 @@ char		*ft_set_parse(char *buf)
 	if (g_shell.error == -1)
 	{
 		ft_free_error(ERR_PIPE);
-		return (NULL);	
+		return (0);	
 	}
 	ft_check_env_var();
 	ft_printf(1, "var = %s\n", g_shell.pip_str[g_shell.i_p]);
@@ -36,7 +36,7 @@ char		*ft_set_parse(char *buf)
 		i++;
 //	if (!ft_strncmp(&buf[i], "echo", 4))
 //		return (ft_set_parse_echo(buf, tmp, i));
-	return (buf);
+	return (1);
 }
 
 void		ft_split_pipe(char *buf)
@@ -50,7 +50,7 @@ void		ft_split_pipe(char *buf)
 		exit(-1000);
 	g_shell.pip_str[len] = NULL;
 	ft_add_split(buf, g_shell.pip_str, '|');
-	if ()
+
 }
 
 int			ft_len_split(char *buf, char splitter)
@@ -99,7 +99,7 @@ void		ft_add_split(char *buf, char **av, char splitter)
 			buf[i++] = splitter;
 			ft_skip_space(buf, &i);
 			if (buf[i] == splitter)
-				g_shell.error = 1;
+				g_shell.error = -1;
 			save = i;
 		}
 		i++;
@@ -123,9 +123,11 @@ void		ft_split_semi_colons(char *buf)
 int			ft_check_parse(char *buf)
 {
 	int		i;
-	ft_set_parse(g_shell.semi_colon[g_shell.i_s]);
+	if (!ft_set_parse(g_shell.semi_colon[g_shell.i_s]))
+		return (0);
 	i = -1;
 	while (g_shell.pip_str[++i])
 		ft_printf(1, "s = %s\n", g_shell.pip_str[i]);
+	ft_free_all();
 	return (1/*ft_get_cmd(buf)*/);
 }
