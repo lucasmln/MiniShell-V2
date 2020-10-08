@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/07 19:58:02 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/08 18:31:25 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,27 @@ int			ft_set_parse(char *buf)
 		return (0);	
 	}
 	ft_check_env_var();
-	ft_printf(1, "var = %s\n", g_shell.pip_str[g_shell.i_p]);
-//	tmp = ft_strdup(buf);
-//	buf = ft_check_quote(buf);
-	i = 0;
-	while (buf[i] == ' ')
-		i++;
-//	if (!ft_strncmp(&buf[i], "echo", 4))
-//		return (ft_set_parse_echo(buf, tmp, i));
+	g_shell.i_p = -1;
+	while (g_shell.pip_str[++g_shell.i_p])
+	{
+		tmp = ft_strdup(g_shell.pip_str[g_shell.i_p]);
+		ft_get_cmd(tmp);
+		ft_strdel(&g_shell.pip_str[g_shell.i_p]);
+		ft_close_fd();
+	}
+	ft_strdel_av(&g_shell.pip_str);
 	return (1);
 }
 
 void		ft_split_pipe(char *buf)
 {
 	int		len;
-	int		i;
 
-	i = 0;
 	len = ft_len_split(buf, '|');
 	if (!(g_shell.pip_str = malloc(sizeof(char *) * (len + 1))))
 		exit(-1000);
-	g_shell.pip_str[len] = NULL;
+	ft_printf(1, "len = %d\n", len);
 	ft_add_split(buf, g_shell.pip_str, '|');
-
 }
 
 int			ft_len_split(char *buf, char splitter)
@@ -123,11 +121,14 @@ void		ft_split_semi_colons(char *buf)
 int			ft_check_parse(char *buf)
 {
 	int		i;
-	if (!ft_set_parse(g_shell.semi_colon[g_shell.i_s]))
-		return (0);
-	i = -1;
-	while (g_shell.pip_str[++i])
-		ft_printf(1, "s = %s\n", g_shell.pip_str[i]);
-	ft_free_all();
-	return (1/*ft_get_cmd(buf)*/);
+	
+	g_shell.i_s = -1;
+	while (g_shell.semi_colon[++g_shell.i_s])
+	{
+		if (!ft_set_parse(g_shell.semi_colon[g_shell.i_s]))
+			return (0);
+	//	ft_free_av(g_shell.pip_str);
+		i = -1;
+	}
+	return (1);
 }

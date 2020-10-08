@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:50:22 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/07 18:35:33 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/08 18:31:18 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ void		ft_init_fd_tab(void)
 	int		i;
 
 	i = 0;
-	g_shell.fd[i] = 1;
+	g_shell.out.fd[i] = 1;
 	while (++i < FD_MAX)
-		g_shell.fd[i] = -2;
+		g_shell.out.fd[i] = -2;
+	i = 0;
+	g_shell.in.fd[i] = 1;
+	while (++i < FD_MAX)
+		g_shell.in.fd[i] = -2;
 }
 
 void		ft_copy_env_utils(const char **env, int i)

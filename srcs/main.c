@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 15:37:39 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/07 19:57:40 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/08 15:21:29 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int			main(int ac, char **av, const char **env)
 	while (1)
 	{
 	 	ft_print_prompt();
-		//ft_free_all();
+		ft_free_all();
 	}
+return (0);
 }
