@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 11:29:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/08 18:58:37 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/09 11:16:41 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			ft_get_cmd(char *buf)
 	{
 		buf = ft_add_path(buf);
 	}
-//	printf("buf modified = %s\n", buf);
+	printf("buf modified = %s\n", buf);
 	if (CD)
 		g_shell.ret = 1;//ft_cd(&buf[i + 2]);
 	else if (EXPORT)
