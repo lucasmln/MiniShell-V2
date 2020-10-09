@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 13:43:00 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/08 18:58:22 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/09 15:25:36 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,70 +44,15 @@ char        *ft_str_add(char *s1, char *s2)
     return (new);
 }
 
-void        ft_go_to_char(char *s, int *i, char c)
+int        ft_go_to_char(char *s, int *i, char c)
 {
     while (s[*i])
     {
         if (s[*i] == c)
-            break ;
+            return (1);
         *i += 1;
     }
-}
-
-char        *ft_copy_without_quote(char *buf, int len)
-{
-    char    *word;
-    int     i;
-    int     k;
-
-    g_shell.check = 0;
-    if (!(word = malloc(sizeof(char) * (len + 1))))
-        exit(-1000);
-    i = 0;
-    k = 0;
-    while (buf[i])
-    {
-        if (!g_shell.check && (buf[i] == 39 || buf[i] == '"'))
-            g_shell.check = buf[i++];
-        else if (g_shell.check == buf[i])
-        {
-            g_shell.check = 0;
-            i++;
-        }
-        else if (k == len)
-            break ;
-        else
-            word[k++] = buf[i++];
-    }
-    word[k] = '\0';
-    return (word);
-}
-
-int         ft_len_without_quote(char *buf)
-{
-    int     i;
-    int     len;
-    int     check;
-
-    check = 0;
-    len = 0;
-    i = 0;
-    while (buf[i])
-    {
-        if (check == 0 && (buf[i] == '"' || buf[i] == 39))
-            check = buf[i++];       
-        else if (check == buf[i])
-        {
-            check = 0;
-            i++;
-        }
-        else
-        {
-            i++;
-            len++;
-        }
-    }
-    return (len);
+    return (0);
 }
 
 char        *ft_get_word(char *buf)
@@ -136,4 +81,27 @@ char        *ft_get_word(char *buf)
             len++;
     }
     return (ft_copy_without_quote(&buf[save], len));
+}
+
+int         ft_find_var_in_av(char **av, char *str)
+{
+    int     i;
+    int     k;
+    char    c;
+
+    i = -1;
+    while (av[++i])
+    {
+        k = -1;
+        c = 0;
+        ft_go_to_char(av[i], &k, '=');
+        c = av[i][k];
+        av[i][k] = '\0';
+        if (!ft_strncmp(av[i], str, ft_strlen(str)))
+        {
+            av[i][k] = c;
+            return (i);
+        }
+    }
+    return (-1);
 }

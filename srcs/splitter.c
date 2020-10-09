@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/08 18:31:25 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/09 16:34:15 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			ft_set_parse(char *buf)
 	while (g_shell.pip_str[++g_shell.i_p])
 	{
 		tmp = ft_strdup(g_shell.pip_str[g_shell.i_p]);
-		ft_get_cmd(tmp);
+		ft_try_cmd(tmp);
 		ft_strdel(&g_shell.pip_str[g_shell.i_p]);
 		ft_close_fd();
 	}
@@ -125,6 +125,10 @@ int			ft_check_parse(char *buf)
 	g_shell.i_s = -1;
 	while (g_shell.semi_colon[++g_shell.i_s])
 	{
+		g_shell.pip.i = 0;
+		g_shell.pip.len = 0;
+		g_shell.pid.i = 0;
+		g_shell.pid.len = 0;
 		if (!ft_set_parse(g_shell.semi_colon[g_shell.i_s]))
 			return (0);
 	//	ft_free_av(g_shell.pip_str);

@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/08 18:31:37 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/09 16:34:03 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,35 @@ typedef struct		s_fd
 	int		len;
 }					t_fd;
 
+typedef struct 		s_pid
+{
+	pid_t	id[FD_MAX];
+	int		i;
+	int		len;
+}					t_pid;
+
+typedef struct		s_pipe
+{
+	int		id[FD_MAX][2];
+	int		i;
+	int		len;
+}					t_pipe;
+
+
+
+typedef struct		s_exe
+{
+	char	**argv;
+	char	*buf;
+	char	*path;
+	int		end_path;
+	int		start_path;
+	char	*cmd;
+	char	*full_cmd;
+	int		error;
+}					t_exe;
+
+
 typedef struct		s_minishell
 {
 	char	buf[BUF_SIZE + 1];
@@ -58,7 +87,8 @@ typedef struct		s_minishell
 	int		i_p;
 	t_fd	out;
 	t_fd	in;
-	pid_t	pid[FD_MAX];
+	t_pid	pid;
+	t_pipe	pip;
 	char	check;
 	int		error;
 	int		ret;
@@ -99,16 +129,34 @@ void		ft_copy_env_utils(const char **env, int i);
 */
 
 char        *ft_str_add(char *s1, char *s2);
-void		ft_go_to_char(char *s, int *i, char c);
+int			ft_go_to_char(char *s, int *i, char c);
 char        *ft_get_word(char *buf);
+
+/*
+ ** quote.c
+*/
+
 char        *ft_copy_without_quote(char *buf, int len);
 int         ft_len_without_quote(char *buf);
+int         ft_find_var_in_av(char **av, char *str);
 
 /*
  ** env_var.c
 */
 
 void        ft_check_env_var(void);
+char        *ft_get_env_var(char *str);
+char        *ft_replace_var(char *str, int *i);
+char        *ft_check_exist_var(char *str, int *i, int save, char c);
+
+/*
+ ** env_var_utils.c
+*/
+
+int         ft_check_except_env(char *str, int *i);
+char        *ft_trim_spaces(char *var);
+char        *ft_inexist_var(char *str, int save, char c, int *i);
+char        *ft_exist_var(char *str, int save[], char c, int *i);
 
 /*
  ** splitter.c
@@ -129,7 +177,7 @@ int         ft_free_error(int code);
 /*
  ** command.c
 */
-int			ft_get_cmd(char *buf);
+int			ft_try_cmd(char *buf);
 
 /*
  ** exit.c
@@ -140,7 +188,7 @@ void        ft_free_exit(void);
 /*
  ** exec.c
 */
-int         ft_exec_cmd(char *buf);
+int         ft_get_cmd(char *buf);
 
 /*
  ** redir.c

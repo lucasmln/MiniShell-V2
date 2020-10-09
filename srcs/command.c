@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 11:29:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/09 11:16:41 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/09 16:33:54 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,13 @@ char		*ft_add_path(char *buf)
 	return (buf);
 }
 
-int			ft_get_cmd(char *buf)
+int			ft_try_cmd(char *buf)
 {
-//	ft_printf(1, "arrived buf = %s\n", buf);
 	if (ft_check_redir(buf))
 		return (g_shell.ret);
 	buf = ft_del_redir(buf);
-//	printf("buf without redir = %s\n", buf);
 	if (ECHO || PWD || ENV)
-	{
 		buf = ft_add_path(buf);
-	}
 	printf("buf modified = %s\n", buf);
 	if (CD)
 		g_shell.ret = 1;//ft_cd(&buf[i + 2]);
@@ -57,7 +53,7 @@ int			ft_get_cmd(char *buf)
 	else if (ft_check_exit(buf))
 		ft_free_exit();
 	else if (!g_shell.legal_exit)
-		ft_exec_cmd(buf);
+		ft_get_cmd(buf);
 	ft_strdel(&buf);
 	return (1/*(g_shell.ret)*/);
 }
