@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 11:29:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/09 16:33:54 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/11 17:17:19 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int			ft_try_cmd(char *buf)
 	buf = ft_del_redir(buf);
 	if (ECHO || PWD || ENV)
 		buf = ft_add_path(buf);
-	printf("buf modified = %s\n", buf);
 	if (CD)
 		g_shell.ret = 1;//ft_cd(&buf[i + 2]);
 	else if (EXPORT)
@@ -55,5 +54,5 @@ int			ft_try_cmd(char *buf)
 	else if (!g_shell.legal_exit)
 		ft_get_cmd(buf);
 	ft_strdel(&buf);
-	return (1/*(g_shell.ret)*/);
+	return (1);
 }

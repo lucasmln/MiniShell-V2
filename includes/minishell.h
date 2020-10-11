@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/09 16:34:03 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/11 18:08:03 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ void		ft_copy_env_utils(const char **env, int i);
 /*
  ** utils.c
 */
-
 char        *ft_str_add(char *s1, char *s2);
 int			ft_go_to_char(char *s, int *i, char c);
 char        *ft_get_word(char *buf);
@@ -135,7 +134,6 @@ char        *ft_get_word(char *buf);
 /*
  ** quote.c
 */
-
 char        *ft_copy_without_quote(char *buf, int len);
 int         ft_len_without_quote(char *buf);
 int         ft_find_var_in_av(char **av, char *str);
@@ -143,7 +141,6 @@ int         ft_find_var_in_av(char **av, char *str);
 /*
  ** env_var.c
 */
-
 void        ft_check_env_var(void);
 char        *ft_get_env_var(char *str);
 char        *ft_replace_var(char *str, int *i);
@@ -152,7 +149,6 @@ char        *ft_check_exist_var(char *str, int *i, int save, char c);
 /*
  ** env_var_utils.c
 */
-
 int         ft_check_except_env(char *str, int *i);
 char        *ft_trim_spaces(char *var);
 char        *ft_inexist_var(char *str, int save, char c, int *i);
@@ -161,18 +157,21 @@ char        *ft_exist_var(char *str, int save[], char c, int *i);
 /*
  ** splitter.c
 */
-
 int			ft_set_parse(char *buf);
 
 /*
  ** free.c
 */
-
 void        ft_free_av(char **av);
 void        ft_free_all();
 void        ft_strdel_av(char ***av);
 void        ft_close_fd(void);
 int         ft_free_error(int code);
+
+/*
+ ** free_2.c
+*/
+void		ft_free_ex(t_exe ex);
 
 /*
  ** command.c
@@ -188,7 +187,23 @@ void        ft_free_exit(void);
 /*
  ** exec.c
 */
+void        ft_fill_argv(char **av, char *buf);
+char        **ft_create_argv(char *buf);
+int         ft_exec_cmd(t_exe *ex);
+int         ft_loop_all_path(t_exe *ex);
 int         ft_get_cmd(char *buf);
+
+/*
+ ** exec_utils.c
+*/
+void        ft_get_path(t_exe *ex);
+int        ft_pass_word(char *buf, int *i);
+char        *ft_del_quote_av(char *s);
+
+/*
+ ** exec_end.c
+*/
+void        ft_final_exec(void);
 
 /*
  ** redir.c

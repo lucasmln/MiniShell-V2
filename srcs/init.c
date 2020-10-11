@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:50:22 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/08 18:31:18 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/11 18:03:12 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void		ft_init_fd_tab(void)
 	int		i;
 
 	i = 0;
-	g_shell.out.fd[i] = 1;
+	g_shell.out.fd[i] = -2;
 	while (++i < FD_MAX)
 		g_shell.out.fd[i] = -2;
 	i = 0;
-	g_shell.in.fd[i] = 1;
+	g_shell.in.fd[i] = -2;
 	while (++i < FD_MAX)
 		g_shell.in.fd[i] = -2;
 }

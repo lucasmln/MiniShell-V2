@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   splitter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/09 16:34:15 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/11 18:11:54 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int			ft_set_parse(char *buf)
 		return (0);	
 	}
 	ft_check_env_var();
+	ft_printf(1, "i_p = %d\n", g_shell.i_p);
 	g_shell.i_p = -1;
 	while (g_shell.pip_str[++g_shell.i_p])
 	{
@@ -37,6 +38,7 @@ int			ft_set_parse(char *buf)
 		ft_close_fd();
 	}
 	ft_strdel_av(&g_shell.pip_str);
+	ft_final_exec();
 	return (1);
 }
 
