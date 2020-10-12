@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 17:17:22 by lucas             #+#    #+#             */
-/*   Updated: 2020/10/11 18:03:08 by lucas            ###   ########.fr       */
+/*   Updated: 2020/10/12 12:49:33 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void        ft_get_path(t_exe *ex)
+int         ft_get_path(t_exe *ex)
 {
     int     pos;
 
@@ -21,9 +21,11 @@ void        ft_get_path(t_exe *ex)
     {
         ex->error = 1;
         ex->path = ft_strdup("");
+        return (0);
     }
     else
         ex->path = ft_strdup(&g_shell.env[pos][5]);
+    return (1);
 }
 
 int        ft_pass_word(char *buf, int *i)

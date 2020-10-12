@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 13:43:00 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/09 15:25:36 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/12 18:12:30 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int        ft_go_to_char(char *s, int *i, char c)
     return (0);
 }
 
-char        *ft_get_word(char *buf)
+char        *ft_get_word(char *buf, char stopper)
 {
     int     i;
     int     len;
@@ -68,7 +68,7 @@ char        *ft_get_word(char *buf)
     save = i;
     while (buf[i + len])
     {
-        if (g_shell.check == 0 && (!buf[i + len] || buf[i + len] == ' '))
+        if (g_shell.check == 0 && ((!buf[i + len] || buf[i + len] == ' ') || buf[i + len] == stopper))
             break ;
         if ((buf[i + len] == 39 || buf[i + len] == '"') && g_shell.check == 0)
             g_shell.check = buf[i++ + len];
@@ -92,16 +92,23 @@ int         ft_find_var_in_av(char **av, char *str)
     i = -1;
     while (av[++i])
     {
-        k = -1;
+        k = 0;
         c = 0;
         ft_go_to_char(av[i], &k, '=');
-        c = av[i][k];
+        c = av[i][++k];
         av[i][k] = '\0';
         if (!ft_strncmp(av[i], str, ft_strlen(str)))
         {
             av[i][k] = c;
             return (i);
         }
+        av[i][k] = c;
     }
     return (-1);
+}
+
+int         ft_error_open_fd(char *buf)
+{
+    ft_strdel(&buf);
+    return ((g_shell.ret = 1));
 }

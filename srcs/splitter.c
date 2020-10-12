@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   splitter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/11 18:11:54 by lucas            ###   ########.fr       */
+/*   Updated: 2020/10/12 14:41:45 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int			ft_set_parse(char *buf)
 {
 	char		*tmp;
+	int			ret;
 	int			i;
 
 	ft_init_fd_tab();
@@ -28,17 +29,21 @@ int			ft_set_parse(char *buf)
 		return (0);	
 	}
 	ft_check_env_var();
-	ft_printf(1, "i_p = %d\n", g_shell.i_p);
 	g_shell.i_p = -1;
+	g_shell.last_pip = 0;
+	ret = -1000;
 	while (g_shell.pip_str[++g_shell.i_p])
 	{
 		tmp = ft_strdup(g_shell.pip_str[g_shell.i_p]);
-		ft_try_cmd(tmp);
+		if (ret == -1000)
+			ret = ft_try_cmd(tmp);
+		else
+			ft_try_cmd(tmp);
 		ft_strdel(&g_shell.pip_str[g_shell.i_p]);
 		ft_close_fd();
 	}
 	ft_strdel_av(&g_shell.pip_str);
-	ft_final_exec();
+	ft_final_exec(ret);
 	return (1);
 }
 
@@ -49,7 +54,6 @@ void		ft_split_pipe(char *buf)
 	len = ft_len_split(buf, '|');
 	if (!(g_shell.pip_str = malloc(sizeof(char *) * (len + 1))))
 		exit(-1000);
-	ft_printf(1, "len = %d\n", len);
 	ft_add_split(buf, g_shell.pip_str, '|');
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 14:53:16 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/11 18:05:45 by lucas            ###   ########.fr       */
+/*   Updated: 2020/10/12 15:59:04 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,56 +54,68 @@ char        **ft_create_argv(char *buf)
     return (av);
 }
 
-int         ft_exec_cmd(t_exe *ex)
+int         ft_exec_cmd(t_exe *ex, int find)
 {
     ex->argv = ft_create_argv(ex->buf);
-    int  k = -1;
-    while (ex->argv[++k])
-        ft_printf(1, "av[%d] = : |%s|\n", k, ex->argv[k]);
     pipe(g_shell.pip.id[g_shell.pip.i]);
-    ft_printf(1, "cmd exec = |%s|\n", ex->full_cmd);
     g_shell.pid.id[g_shell.pid.i] = fork();
     if (g_shell.pid.id[g_shell.pid.i] == 0)
     {
-        ft_printf(1, "len fd = %d\n", g_shell.out.fd[g_shell.out.len]);
         close(g_shell.pip.id[g_shell.pip.i][0]);
-        if (g_shell.pip.i > 0)
+        if (g_shell.in.len > 0)
+            dup2(g_shell.in.fd[g_shell.in.len - 1], STDIN_FILENO);
+        else if (g_shell.pip.i > 0)
             dup2(g_shell.pip.id[g_shell.pip.i - 1][0], STDIN_FILENO);
         if (g_shell.out.len > 0)
             dup2(g_shell.out.fd[g_shell.out.len - 1], STDOUT_FILENO);
+        else if (!g_shell.pip_str[g_shell.i_p + 1])
+            ;
         else
             dup2(g_shell.pip.id[g_shell.pip.i][1], STDOUT_FILENO);
         exit(execve(ex->full_cmd, ex->argv, g_shell.env));
     }
     close(g_shell.pip.id[g_shell.pip.i][1]);
+    if (!find)
+        ft_free_av(ex->argv);
     g_shell.pip.i++;   
     g_shell.pip.len++;   
     g_shell.pid.i++;   
     g_shell.pid.len++;
     ft_strdel(&ex->full_cmd); 
-    return (1);
+    return (find);
 }
 
 int         ft_loop_all_path(t_exe *ex)
 {
     int             i;
+    int             find;
     char            *tmp;
     struct stat     info;
 
     ex->end_path = 0;
     ex->start_path = 0;
-    while (ft_go_to_char(ex->path, &ex->end_path, ':'))
+    if (!ft_strncmp(ex->cmd, "echo", 4) || !ft_strncmp(ex->cmd, "env", 3) || !ft_strncmp(ex->cmd, "pwd", 3))
     {
+        ex->full_cmd = ft_add_path(ft_strdup(ex->cmd));
+        return (ft_exec_cmd(ex, 1));
+    }
+    if (!(stat(ex->cmd, &info)))
+        find = 1;
+    ex->full_cmd = ft_strdup(ex->cmd);
+    while (ft_go_to_char(ex->path, &ex->end_path, ':') && !find)
+    {
+        ft_strdel(&ex->full_cmd);
         ex->path[ex->end_path] = '\0';
         tmp = ft_str_add(ft_strdup(&ex->path[ex->start_path]), ft_strdup("/"));
         ex->full_cmd = ft_str_add(tmp, ft_strdup(ex->cmd));
         ex->path[ex->end_path] = ':';
         ex->start_path = ++ex->end_path;
         if (!(stat(ex->full_cmd, &info)))
-            return (ft_exec_cmd(ex));
-        ft_strdel(&ex->full_cmd); 
+            find = 1;
+        if (find)
+            break ;
     }
-    return (0);
+    return (ft_exec_cmd(ex, find));
 }
 
 int         ft_get_cmd(char *buf)
@@ -117,11 +129,13 @@ int         ft_get_cmd(char *buf)
     k = 0;
     ex.error = 0;
     ex.buf = ft_strdup(buf);
-    ex.cmd = ft_get_word(buf);
+    ex.cmd = ft_get_word(buf, 0);
     ft_get_path(&ex);
     ex.path = ft_str_add(ex.path, ft_strdup(":"));
-    if (ft_loop_all_path(&ex))
+    if ((k = ft_loop_all_path(&ex)))
         ft_free_av(ex.argv);
+    else
+        ft_printf(1, "minishell: command not found: %s\n", ex.cmd);
     ft_free_ex(ex);
-    return (0);
+    return (k);
 }

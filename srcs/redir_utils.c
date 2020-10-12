@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 17:02:30 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/08 18:58:28 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/12 15:48:22 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void        ft_skip_redir(char *buf, int *i)
             break ;
         *i += 1;
     }
+  //  ft_skip_space(buf, i);
 }
 
 int         ft_len_without_redir(char *buf)
