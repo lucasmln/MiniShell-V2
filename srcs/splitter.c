@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/12 14:41:45 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/13 15:49:10 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int			ft_set_parse(char *buf)
 	ret = -1000;
 	while (g_shell.pip_str[++g_shell.i_p])
 	{
+        g_shell.error_input = 0;
 		tmp = ft_strdup(g_shell.pip_str[g_shell.i_p]);
 		if (ret == -1000)
 			ret = ft_try_cmd(tmp);

@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/12 18:53:23 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/13 15:04:25 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct		s_minishell
 	t_pipe	pip;
 	char	check;
 	int		error;
+	int		error_input;
 	int		ret;
 	int		legal_exit;
 }					t_minishell;
@@ -118,6 +119,7 @@ int         ft_cd_directory(char *dir);
 int         ft_cd_back(void);
 int         ft_cd_home(char *buf);
 void        ft_change_env_pwd(char *path);
+int         ft_check_error_cd(char *buf);
 
 /*
  ** builtins_error.c
@@ -159,6 +161,11 @@ void        ft_check_env_var(void);
 char        *ft_get_env_var(char *str);
 char        *ft_replace_var(char *str, int *i);
 char        *ft_check_exist_var(char *str, int *i, int save, char c);
+
+/*
+ ** export.c
+*/
+int         ft_export(char *buf);
 
 /*
  ** env_var_utils.c

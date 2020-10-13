@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:01:39 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/12 16:24:44 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/13 15:49:03 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,10 @@ int         ft_redir_input(char *buf, int *i)
     g_shell.in.fd[g_shell.in.i] = open(name, O_RDONLY);
     if (g_shell.in.fd[g_shell.in.i] < 0)
     {
+        g_shell.error_input = 1;
         ft_printf(1, "minishell: %s: No such file or directory\n", name);
         ft_strdel(&name);
-        return (0);
+        return (1);
     }
         ft_strdel(&name);
     g_shell.in.i++;

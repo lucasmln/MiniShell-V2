@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 14:53:16 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/12 15:59:04 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/13 15:35:25 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char        **ft_create_argv(char *buf)
 
 int         ft_exec_cmd(t_exe *ex, int find)
 {
+    ft_printf(1, "buf argv = |%s|\n", ex->buf);
     ex->argv = ft_create_argv(ex->buf);
     pipe(g_shell.pip.id[g_shell.pip.i]);
     g_shell.pid.id[g_shell.pid.i] = fork();
@@ -72,6 +73,8 @@ int         ft_exec_cmd(t_exe *ex, int find)
             ;
         else
             dup2(g_shell.pip.id[g_shell.pip.i][1], STDOUT_FILENO);
+        if (g_shell.error_input)
+            exit((g_shell.error_input = 0) + 1);
         exit(execve(ex->full_cmd, ex->argv, g_shell.env));
     }
     close(g_shell.pip.id[g_shell.pip.i][1]);
