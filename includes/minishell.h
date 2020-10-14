@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/13 15:04:25 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/14 18:07:23 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,44 @@ char        *ft_check_exist_var(char *str, int *i, int save, char c);
  ** export.c
 */
 int         ft_export(char *buf);
+
+/*
+ ** export_utils.c
+*/
+void        ft_skip_quote(char *buf, int *i);
+int         ft_len_word_with_quote(char *buf);
+char        *ft_get_word_with_quote(char *buf);
+int         ft_avlen(char **env);
+char        **ft_avdup(char **env);
+
+/*
+ ** export_error.c
+*/
+int         ft_error_export(char *buf, int type);
+int         ft_check_error_export(char *buf);
+int         ft_check_error_var(char *var);
+int         ft_check_wrong_char(char *var);
+
+/*
+ ** export_printer.c
+*/
+void        ft_print_env(void);
+int         ft_set_print_env(char *buf);
+
+
+/*
+ ** export_get_var.c
+*/
+char            **ft_add_var_to_env(char *var, char **env);
+void            ft_replace_var_in_all_env(char *var, int check);
+int             ft_check_already_exist_var(char *var);
+char            *ft_get_pos_var(char *var, int pos[], int *i);
+char            *ft_change_var(char *buf);
+
+/*
+ ** unset.c
+*/
+int         ft_unset(char *buf);
 
 /*
  ** env_var_utils.c

@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 15:37:39 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/08 15:21:29 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/14 12:54:36 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int			main(int ac, char **av, const char **env)
 	if (!(ft_copy_env(env)))
 		return (-1);
 	ft_init_fd_tab();
+	g_shell.ret = 0;
 	signal(SIGINT, ft_get_signal);
 	signal(SIGQUIT, ft_get_signal);
 	while (1)
@@ -47,5 +48,5 @@ int			main(int ac, char **av, const char **env)
 	 	ft_print_prompt();
 		ft_free_all();
 	}
-return (0);
+	return (0);
 }

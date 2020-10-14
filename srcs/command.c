@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 11:29:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/13 11:45:54 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/14 18:05:35 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			ft_try_cmd(char *buf)
 	else if (!ft_strncmp(buf, "export", 6))
 		ret = ft_export(buf);
 	else if (UNSET)
-		g_shell.ret = 3;//ft_unset(&buf[i + ft_strlen("unset")]);
+		ret = ft_unset(buf);
 	else if (ft_check_exit(buf))
 		ft_free_exit();
 	else if (!g_shell.legal_exit)

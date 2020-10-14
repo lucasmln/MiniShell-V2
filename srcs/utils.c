@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 13:43:00 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/12 18:12:30 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/14 19:12:17 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int         ft_find_var_in_av(char **av, char *str)
     int     i;
     int     k;
     char    c;
+    char    *tmp;
 
     i = -1;
     while (av[++i])
@@ -95,13 +96,17 @@ int         ft_find_var_in_av(char **av, char *str)
         k = 0;
         c = 0;
         ft_go_to_char(av[i], &k, '=');
-        c = av[i][++k];
+        c = av[i][k] == '=' ? av[i][k] : av[i][k];
         av[i][k] = '\0';
-        if (!ft_strncmp(av[i], str, ft_strlen(str)))
+        tmp = ft_str_add(ft_strdup(av[i]), ft_strdup("="));
+      //  ft_printf(1, "tmp = |%s|, str = |%s|, cmp = %d, i =\n", tmp, str, ft_strncmp(tmp, str, ft_strlen(str)));
+        if (!ft_strncmp(tmp, str, ft_strlen(str)))
         {
+            ft_strdel(&tmp);
             av[i][k] = c;
             return (i);
         }
+        ft_strdel(&tmp);
         av[i][k] = c;
     }
     return (-1);

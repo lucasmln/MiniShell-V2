@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 11:48:55 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/08 14:53:13 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/14 12:54:03 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void        ft_free_exit(void)
 {
-    int     i;
-
     ft_free_av(g_shell.pip_str);
     ft_free_av(g_shell.semi_colon);
     ft_free_av(g_shell.sort_env);
