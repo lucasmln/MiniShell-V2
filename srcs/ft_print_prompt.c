@@ -23,7 +23,7 @@ int			ft_print_prompt(void)
 	while (i >= 0 && g_shell.dir[i] != '/')
 		i--;
 	ft_printf(1, "" BOLDGREEN "➜ " RESET BOLDCYAN " %s " RESET,
-														&g_shell.dir[i + 1]);
+			&g_shell.dir[i + 1]);
 	ft_strdel(&g_shell.dir);
 	ret = read(0, g_shell.buf, BUF_SIZE);
 	g_shell.buf[ret] = '\0';

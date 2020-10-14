@@ -29,6 +29,7 @@ void		ft_init_fd_tab(void)
 void		ft_copy_env_utils(const char **env, int i)
 {
 	char	*tmp;
+
 	if (!(ft_strncmp(env[i], "SHLVL=", ft_strlen("SHLVL="))))
 	{
 		tmp = ft_itoa(ft_atoi(&env[i][ft_strlen("SHLVL=")]) + 1);
@@ -67,7 +68,7 @@ int			ft_copy_env(const char **env)
 	g_shell.len_env = len;
 	g_shell.len_exp = len;
 	if (!(g_shell.env = malloc(sizeof(char *) * (len + 1))) ||
-					!(g_shell.sort_env = malloc(sizeof(char *) * (len + 1))))
+			!(g_shell.sort_env = malloc(sizeof(char *) * (len + 1))))
 		return (0);
 	i = -1;
 	while (env[++i])

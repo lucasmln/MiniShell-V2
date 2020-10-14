@@ -12,34 +12,41 @@
 
 #include "../includes/minishell.h"
 
-void           ft_change_env_pwd(char *path)
+void		ft_change_env_pwd_utils(char *tmp, int i, char *path)
 {
-    int     pos;
-    int     i;
-    int     k;
-    char    *tmp;
+	int		pos;
 
-    pos = ft_find_var_in_av(g_shell.env, "OLDPWD=");
-    i = ft_find_var_in_av(g_shell.env, "PWD=");
-    k = ft_find_var_in_av(g_shell.sort_env, "OLDPWD=");
-    if (pos == -1)
-        ft_error_cd("OLDPWD", NO_PWD);
-    if (i == -1)
-        ft_error_cd("PWD", NO_PWD);
-    if (i == -1 || pos == -1)
-        return ;
-    tmp = ft_str_add(ft_strdup("OLD"), ft_strdup(g_shell.env[i]));
-    ft_strdel(&g_shell.env[pos]);
-    ft_strdel(&g_shell.sort_env[k]);
-    g_shell.sort_env[k] = ft_strdup(tmp);
-    g_shell.env[pos] = ft_strdup(tmp);
-    ft_strdel(&tmp);
-    pos = ft_find_var_in_av(g_shell.sort_env, "PWD=");
-    tmp = ft_str_add(ft_strdup("PWD="), ft_strdup(path));
-    ft_strdel(&g_shell.env[i]);
-    ft_strdel(&g_shell.sort_env[pos]);
-    g_shell.sort_env[pos] = ft_strdup(tmp);
-    g_shell.env[i] = ft_strdup(tmp);
-    ft_strdel(&tmp);
-    ft_strdel(&path);
+	pos = ft_find_var_in_av(g_shell.sort_env, "PWD=");
+	tmp = ft_str_add(ft_strdup("PWD="), ft_strdup(path));
+	ft_strdel(&g_shell.env[i]);
+	ft_strdel(&g_shell.sort_env[pos]);
+	g_shell.sort_env[pos] = ft_strdup(tmp);
+	g_shell.env[i] = ft_strdup(tmp);
+}
+
+void		ft_change_env_pwd(char *path)
+{
+	int		pos;
+	int		i;
+	int		k;
+	char	*tmp;
+
+	pos = ft_find_var_in_av(g_shell.env, "OLDPWD=");
+	i = ft_find_var_in_av(g_shell.env, "PWD=");
+	k = ft_find_var_in_av(g_shell.sort_env, "OLDPWD=");
+	if (pos == -1)
+		ft_error_cd("OLDPWD", NO_PWD);
+	if (i == -1)
+		ft_error_cd("PWD", NO_PWD);
+	if (i == -1 || pos == -1)
+		return ;
+	tmp = ft_str_add(ft_strdup("OLD"), ft_strdup(g_shell.env[i]));
+	ft_strdel(&g_shell.env[pos]);
+	ft_strdel(&g_shell.sort_env[k]);
+	g_shell.sort_env[k] = ft_strdup(tmp);
+	g_shell.env[pos] = ft_strdup(tmp);
+	ft_strdel(&tmp);
+	ft_change_env_pwd_utils(tmp, i, path);
+	ft_strdel(&tmp);
+	ft_strdel(&path);
 }

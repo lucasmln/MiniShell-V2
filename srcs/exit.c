@@ -12,15 +12,15 @@
 
 #include "../includes/minishell.h"
 
-void        ft_free_exit(void)
+void		ft_free_exit(void)
 {
-    ft_free_av(g_shell.pip_str);
-    ft_free_av(g_shell.semi_colon);
-    ft_free_av(g_shell.sort_env);
-    ft_free_av(g_shell.env);
-    ft_strdel(&g_shell.str);
-    ft_strdel(&g_shell.dir);
-    exit(g_shell.ret);
+	ft_free_av(g_shell.pip_str);
+	ft_free_av(g_shell.semi_colon);
+	ft_free_av(g_shell.sort_env);
+	ft_free_av(g_shell.env);
+	ft_strdel(&g_shell.str);
+	ft_strdel(&g_shell.dir);
+	exit(g_shell.ret);
 }
 
 int			ft_check_exit(char *buf)
@@ -29,9 +29,9 @@ int			ft_check_exit(char *buf)
 	int		nb;
 
 	g_shell.legal_exit = 0;
-    nb = 0;
+	nb = 0;
 	if ((!ft_strncmp(buf, "exit", 4) &&
-									!buf[4]) || !ft_strncmp(buf, "exit ", 5))
+				!buf[4]) || !ft_strncmp(buf, "exit ", 5))
 	{
 		i = 4;
 		while (buf[i] == ' ')
@@ -53,7 +53,7 @@ int			ft_check_exit(char *buf)
 			}
 			i++;
 		}
-        ft_printf(1, "nb = %d\n", nb);
+		ft_printf(1, "nb = %d\n", nb);
 		if (nb)
 			g_shell.ret = ft_atoi(&buf[5]);
 		return (1);

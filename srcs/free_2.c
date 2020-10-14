@@ -12,9 +12,9 @@
 
 #include "../includes/minishell.h"
 
-void        ft_free_ex(t_exe ex)
+void		ft_free_ex(t_exe ex)
 {
-    ft_strdel(&ex.buf);
-    ft_strdel(&ex.path);
-    ft_strdel(&ex.cmd);
+	ft_strdel(&ex.buf);
+	ft_strdel(&ex.path);
+	ft_strdel(&ex.cmd);
 }

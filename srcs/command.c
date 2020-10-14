@@ -19,13 +19,13 @@ char		*ft_add_path(char *buf)
 
 	new = NULL;
 	if ((PWD && ft_strlen(buf) == 3) || (PWD && (buf[3] == '<' ||
-											buf[3] == '>' || buf[3] == ' ')))
+					buf[3] == '>' || buf[3] == ' ')))
 		new = ft_str_add(ft_strdup("/bin/"), buf);
 	else if ((ECHO && ft_strlen(buf) == 4) || (ECHO && (buf[4] == '<' ||
-											buf[4] == '>' || buf[4] == ' ')))
+					buf[4] == '>' || buf[4] == ' ')))
 		new = ft_str_add(ft_strdup("/bin/"), buf);
 	else if ((ENV && ft_strlen(buf) == 3) || (ENV && (buf[3] = '<' ||
-											buf[3] == '>' || buf[3] == ' ')))
+					buf[3] == '>' || buf[3] == ' ')))
 		new = ft_str_add(ft_strdup("/usr/bin/"), buf);
 	if (new)
 	{
