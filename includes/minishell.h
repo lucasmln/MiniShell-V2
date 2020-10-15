@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/14 18:07:23 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/15 17:00:58 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct		s_minishell
 	char	check;
 	int		error;
 	int		error_input;
+	int		pos_error_in;
 	int		ret;
 	int		legal_exit;
 }					t_minishell;
