@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:08:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/13 15:49:45 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/19 19:03:52 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int			ft_check_error_cd(char *buf)
 	int		i;
 
 	i = 2;
+	g_shell.tmp_ret = !g_shell.pip_str[g_shell.i_p + 1] ? 0 : g_shell.tmp_ret;
 	if (!buf[i])
 		return (0);
 	if (buf[i] == '"' && buf[i + 1] && buf[i + 1] == '"')
@@ -25,6 +26,7 @@ int			ft_check_error_cd(char *buf)
 		return (0);
 	if (buf[i] == ' ')
 		return (0);
+	g_shell.tmp_ret = 127;
 	return (1);
 }
 
@@ -82,6 +84,8 @@ int			ft_cd_directory(char *dir)
 	chdir(dir);
 	path = getcwd(path, 0);
 	ft_change_env_pwd(ft_strdup(path));
+	ft_strdel(&g_shell.dir);
+	g_shell.dir = ft_strdup(path);
 	ft_strdel(&path);
 	return (1);
 }

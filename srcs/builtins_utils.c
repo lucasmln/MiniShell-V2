@@ -22,6 +22,7 @@ void		ft_change_env_pwd_utils(char *tmp, int i, char *path)
 	ft_strdel(&g_shell.sort_env[pos]);
 	g_shell.sort_env[pos] = ft_strdup(tmp);
 	g_shell.env[i] = ft_strdup(tmp);
+	ft_strdel(&tmp);
 }
 
 void		ft_change_env_pwd(char *path)

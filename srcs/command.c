@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 11:29:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/14 18:05:35 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/19 10:34:30 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@ char		*ft_add_path(char *buf)
 	char	*tmp;
 
 	new = NULL;
-	if ((PWD && ft_strlen(buf) == 3) || (PWD && (buf[3] == '<' ||
-					buf[3] == '>' || buf[3] == ' ')))
+	if ((!ft_strncmp(buf, "pwd", 3) && ft_strlen(buf) == 3) ||
+			(!ft_strncmp(buf, "pwd", 3) && (buf[3] == '<' ||
+				buf[3] == '>' || buf[3] == ' ')))
 		new = ft_str_add(ft_strdup("/bin/"), buf);
-	else if ((ECHO && ft_strlen(buf) == 4) || (ECHO && (buf[4] == '<' ||
-					buf[4] == '>' || buf[4] == ' ')))
+	else if ((!ft_strncmp(buf, "echo", 4) && ft_strlen(buf) == 4) ||
+			(!ft_strncmp(buf, "echo", 4) && (buf[4] == '<' ||
+				buf[4] == '>' || buf[4] == ' ')))
 		new = ft_str_add(ft_strdup("/bin/"), buf);
-	else if ((ENV && ft_strlen(buf) == 3) || (ENV && (buf[3] = '<' ||
-					buf[3] == '>' || buf[3] == ' ')))
+	else if ((!ft_strncmp(buf, "env", 3) && ft_strlen(buf) == 3) ||
+			(!ft_strncmp(buf, "pwd", 3) && (buf[3] = '<' ||
+				buf[3] == '>' || buf[3] == ' ')))
 		new = ft_str_add(ft_strdup("/usr/bin/"), buf);
 	if (new)
 	{
@@ -49,9 +52,9 @@ int			ft_try_cmd(char *buf)
 	buf = tmp;
 	if (!ft_strncmp(buf, "cd", 2))
 		ret = ft_cd(buf);
-	else if (!ft_strncmp(buf, "export", 6))
+	else if (!ft_strncmp(buf, "export", ft_strlen("export")))
 		ret = ft_export(buf);
-	else if (UNSET)
+	else if (!ft_strncmp(buf, "unset", 5))
 		ret = ft_unset(buf);
 	else if (ft_check_exit(buf))
 		ft_free_exit();

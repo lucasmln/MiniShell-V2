@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 17:54:59 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/14 17:56:05 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/19 10:51:52 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			ft_len_word_with_quote(char *buf)
 		len++;
 		if (!check && (buf[i] == '"' || buf[i] == 39))
 			check = buf[i++];
-		else if (check && (buf[i] == '"' || buf[i] == 39))
+		else if (check && check == buf[i])
 		{
 			check = 0;
 			i++;

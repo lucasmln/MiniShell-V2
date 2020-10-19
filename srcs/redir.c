@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:01:39 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/13 15:49:03 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/15 17:01:29 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int			ft_redir_output(char *buf, int *i, int type)
 
 	*i += 1;
 	*i = type ? *i + 1 : *i;
-	ft_printf(1, "name = |%s|\n", name);
 	name = ft_find_good_name_redir(buf, i);
 	if (type)
 	{
@@ -31,10 +30,8 @@ int			ft_redir_output(char *buf, int *i, int type)
 			;
 	}
 	else
-	{
 		g_shell.out.fd[g_shell.out.i] = open(name, O_TRUNC | O_CREAT |
 				O_RDWR, S_IRUSR | S_IROTH | S_IRGRP | S_IWUSR, 0640);
-	}
 	ft_strdel(&name);
 	if (g_shell.out.fd[g_shell.out.i] < 0)
 		return (0);
@@ -78,6 +75,7 @@ int			ft_redir_input(char *buf, int *i)
 	if (g_shell.in.fd[g_shell.in.i] < 0)
 	{
 		g_shell.error_input = 1;
+		g_shell.pos_error_in = g_shell.i_p;
 		ft_printf(1, "minishell: %s: No such file or directory\n", name);
 		ft_strdel(&name);
 		return (1);
@@ -104,6 +102,21 @@ int			ft_init_redir(char *buf, int *i, int *check)
 	return (0);
 }
 
+int			ft_cond_chekc_redir(char *buf, int *i, int check)
+{
+	if (!check && buf[*i] == '>')
+	{
+		if (!ft_redir_output(buf, i, buf[*i + 1] != '>' ? 0 : 1))
+			return (0);
+	}
+	else if (!check && buf[*i] == '<')
+	{
+		if (!ft_redir_input(buf, i))
+			return (0);
+	}
+	return (1);
+}
+
 int			ft_check_redir(char *buf)
 {
 	int		i;
@@ -120,14 +133,9 @@ int			ft_check_redir(char *buf)
 			check = 0;
 			i++;
 		}
-		else if (!check && buf[i] == '>')
+		else if (!check && (buf[i] == '>' || buf[i] == '<'))
 		{
-			if (!ft_redir_output(buf, &i, buf[i + 1] != '>' ? 0 : 1))
-				return (ft_error_open_fd(buf));
-		}
-		else if (!check && buf[i] == '<')
-		{
-			if (!ft_redir_input(buf, &i))
+			if (!ft_cond_chekc_redir(buf, &i, check))
 				return (ft_error_open_fd(buf));
 		}
 		else

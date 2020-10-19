@@ -30,12 +30,6 @@
 # define FD_MAX 512
 # define ERR_SEMI_COLONS -2
 # define ERR_PIPE -3
-# define EXPORT !ft_strncmp(buf, "export", 6)
-# define UNSET !ft_strncmp(buf, "unset", 5)
-# define CD !ft_strncmp(buf, "cd", 2)
-# define ECHO !ft_strncmp(buf, "echo", 4)
-# define PWD !ft_strncmp(buf, "pwd", 3)
-# define ENV !ft_strncmp(buf, "env", 3)
 
 typedef struct		s_fd
 {
@@ -89,6 +83,7 @@ typedef struct		s_minishell
 	t_pid	pid;
 	t_pipe	pip;
 	char	check;
+	int		tmp_ret;
 	int		error;
 	int		error_input;
 	int		pos_error_in;
@@ -189,8 +184,7 @@ int         ft_check_wrong_char(char *var);
  ** export_printer.c
 */
 void        ft_print_env(void);
-int         ft_set_print_env(char *buf);
-
+int         ft_set_print_env(char *buf, char *word);
 
 /*
  ** export_get_var.c
@@ -279,5 +273,6 @@ char        *ft_find_good_name_redir(char *buf, int *i);
 */
 int         ft_check_error_redir(char *buf);
 char        *ft_del_redir(char *buf);
+void		ft_init_var(int *i, int *len, int *check, int *redir);
 
 #endif

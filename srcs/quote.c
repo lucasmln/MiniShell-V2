@@ -53,7 +53,7 @@ int			ft_len_without_quote(char *buf)
 	while (buf[i])
 	{
 		if (check == 0 && (buf[i] == '"' || buf[i] == 39))
-			check = buf[i++];       
+			check = buf[i++];
 		else if (check == buf[i])
 		{
 			check = 0;

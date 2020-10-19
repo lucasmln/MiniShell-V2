@@ -23,6 +23,32 @@ void		ft_free_exit(void)
 	exit(g_shell.ret);
 }
 
+int			ft_check_exit_utils(char *buf, int i)
+{
+	int		nb;
+
+	while (buf[i])
+	{
+		nb = ft_isdigit(buf[i]) ? 1 : 0;
+		if (buf[i] == ' ' && buf[i + 1] && buf[i + 1] != ' ')
+		{
+			ft_printf(1, "minishell: too many arguments\n");
+			g_shell.legal_exit = 1;
+			return ((g_shell.ret = 1) - 1);
+		}
+		if (!ft_isdigit(buf[i]) && buf[i] != ' ')
+		{
+			ft_printf(1,
+				"minishell: exit: %s argument numérique nécessaire\n", &buf[5]);
+			return ((g_shell.ret = 2) - 1);
+		}
+		i++;
+	}
+	if (nb)
+		g_shell.ret = ft_atoi(&buf[5]);
+	return (1);
+}
+
 int			ft_check_exit(char *buf)
 {
 	int		i;
@@ -34,29 +60,8 @@ int			ft_check_exit(char *buf)
 				!buf[4]) || !ft_strncmp(buf, "exit ", 5))
 	{
 		i = 4;
-		while (buf[i] == ' ')
-			i++;
-		while (buf[i])
-		{
-			nb = ft_isdigit(buf[i]) ? 1 : 0;
-			if (buf[i] == ' ' && buf[i + 1] && buf[i + 1] != ' ')
-			{
-				ft_printf(1, "minishell: too many arguments\n");
-				g_shell.legal_exit = 1;
-				return ((g_shell.ret = 1) - 1);
-			}
-			if (!ft_isdigit(buf[i]) && buf[i] != ' ')
-			{
-				ft_printf(1,
-				"minishell: exit: %s argument numérique nécessaire\n", &buf[5]);
-				return ((g_shell.ret = 2) - 1);
-			}
-			i++;
-		}
-		ft_printf(1, "nb = %d\n", nb);
-		if (nb)
-			g_shell.ret = ft_atoi(&buf[5]);
-		return (1);
+		ft_skip_space(buf, &i);
+		return (ft_check_exit_utils(buf, i));
 	}
 	return (0);
 }

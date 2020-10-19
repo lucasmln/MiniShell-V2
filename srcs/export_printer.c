@@ -24,17 +24,24 @@ void		ft_print_env(void)
 	}
 }
 
-int			ft_set_print_env(char *buf)
+void		ft_init_set_printer(char *word, char *buf, int *check)
 {
 	int		i;
+
+	ft_strdel(&word);
+	i = -1;
+	*check = 0;
+	while (buf[++i] && !*check)
+		if (buf[i] != ' ')
+			*check = 1;
+}
+
+int			ft_set_print_env(char *buf, char *word)
+{
 	int		check;
 	pid_t	pid;
 
-	i = -1;
-	check = 0;
-	while (buf[++i] && !check)
-		if (buf[i] != ' ')
-			check = 1;
+	ft_init_set_printer(word, buf, &check);
 	pid = fork();
 	if (pid == 0)
 	{

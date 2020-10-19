@@ -33,14 +33,10 @@ char		*ft_str_add(char *s1, char *s2)
 		new[i] = s1[i];
 	k = -1;
 	while (s2[++k])
-	{
 		new[i + k] = s2[k];
-	}
 	new[i + k] = '\0';
 	ft_strdel(&s1);
 	ft_strdel(&s2);
-	s1 = NULL;
-	s2 = NULL;
 	return (new);
 }
 
@@ -68,7 +64,8 @@ char		*ft_get_word(char *buf, char stopper)
 	save = i;
 	while (buf[i + len])
 	{
-		if (g_shell.check == 0 && ((!buf[i + len] || buf[i + len] == ' ') || buf[i + len] == stopper))
+		if (g_shell.check == 0 && ((!buf[i + len] || buf[i + len] == ' ') ||
+													buf[i + len] == stopper))
 			break ;
 		if ((buf[i + len] == 39 || buf[i + len] == '"') && g_shell.check == 0)
 			g_shell.check = buf[i++ + len];

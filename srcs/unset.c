@@ -19,6 +19,7 @@ int			ft_error_unset(char *buf)
 	tmp = ft_get_word(buf, 0);
 	ft_printf(1, "minishell: %s: command not found\n", tmp);
 	ft_strdel(&tmp);
+	g_shell.tmp_ret = 127;
 	return (1);
 }
 
@@ -122,21 +123,8 @@ int			ft_check_wrong_char_unset(char *var)
 	return (0);
 }
 
-int			ft_unset(char *buf)
+void		ft_loop_unset(char *word, char *buf, char *tmp, int start)
 {
-	int		i;
-	char	*word;
-	char	*tmp;
-	int		start;
-
-	pipe(g_shell.pip.id[g_shell.pip.i]);
-	if (ft_check_error_unset(buf, &start))
-		return (ft_error_unset(buf));
-	i = 0;
-	word = ft_get_word(buf, 0);
-	tmp = ft_strtrim(word, " ");
-	ft_strdel(&word);
-	word = tmp;
 	while (word[0])
 	{
 		if (ft_check_wrong_char_unset(word))
@@ -153,6 +141,25 @@ int			ft_unset(char *buf)
 		word = tmp;
 	}
 	ft_strdel(&word);
+}
+
+int			ft_unset(char *buf)
+{
+	int		i;
+	char	*word;
+	char	*tmp;
+	int		start;
+
+	pipe(g_shell.pip.id[g_shell.pip.i]);
+	g_shell.tmp_ret = !g_shell.pip_str[g_shell.i_p + 1] ? 0 : g_shell.tmp_ret;
+	if (ft_check_error_unset(buf, &start))
+		return (ft_error_unset(buf));
+	i = 0;
+	word = ft_get_word(buf, 0);
+	tmp = ft_strtrim(word, " ");
+	ft_strdel(&word);
+	word = tmp;
+	ft_loop_unset(word, buf, tmp, start);
 	close(g_shell.pip.id[g_shell.pip.i][1]);
 	g_shell.pip.i++;
 	g_shell.pip.len++;

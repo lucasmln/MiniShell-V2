@@ -21,6 +21,7 @@ int			ft_error_export(char *buf, int type)
 		ft_printf(1, "minishell: %s: command not found\n", tmp);
 	ft_strdel(&tmp);
 	close(g_shell.pip.id[g_shell.pip.i][1]);
+	g_shell.tmp_ret = 127;
 	g_shell.pip.i++;
 	g_shell.pip.len++;
 	return (0);
@@ -33,11 +34,11 @@ int			ft_check_error_export(char *buf)
 	int		check;
 
 	i = 6;
-	check = 0;
+	check = buf[i];
+	cmp = 1;
+	g_shell.tmp_ret = !g_shell.pip_str[g_shell.i_p + 1] ? 0 : g_shell.tmp_ret;
 	if (buf[i] == '"' || buf[i] == 39)
 	{
-		check = buf[i];
-		cmp = 1;
 		while (check)
 		{
 			i++;
@@ -49,12 +50,10 @@ int			ft_check_error_export(char *buf)
 				check = buf[i];
 			cmp++;
 		}
-		if (cmp % 2 == 0)
-			return (NOT_FOUND);
 	}
-	else if (buf[i] && buf[i] != ' ')
+	else if (buf[i] != '\0' && buf[i] != ' ')
 		return (NOT_FOUND);
-	return (0);
+	return (cmp % 2 == 0 ? NOT_FOUND : 0);
 }
 
 int			ft_check_error_var(char *var)

@@ -22,7 +22,6 @@ int			ft_check_error_redir(char *buf)
 		if (buf[i] == '>' || buf[i] == '<')
 		{
 			i++;
-			ft_printf(1, "c = %c\n", buf[i]);
 			if (buf[i] && buf[i] == '>')
 				i++;
 			ft_skip_space(buf, &i);
@@ -55,6 +54,14 @@ void		ft_skip_redir(char *buf, int *i)
 	}
 }
 
+void		ft_init_var(int *i, int *len, int *check, int *redir)
+{
+	*i = 0;
+	*check = 0;
+	*len = 0;
+	*redir = 0;
+}
+
 int			ft_len_without_redir(char *buf)
 {
 	int		i;
@@ -62,10 +69,7 @@ int			ft_len_without_redir(char *buf)
 	int		check;
 	int		redir;
 
-	i = 0;
-	check = 0;
-	len = 0;
-	redir = 0;
+	ft_init_var(&i, &len, &check, &redir);
 	while (buf[i])
 	{
 		if (!(!check && (buf[i] == '<' || buf[i] == '>')))
@@ -91,9 +95,7 @@ char		*ft_copy_without_redir(char *buf, char *new)
 	int		check;
 	int		k;
 
-	i = 0;
-	k = 0;
-	check = 0;
+	ft_init_var(&i, &k, &check, &i);
 	while (buf[i])
 	{
 		if (!check && (buf[i] == '"' || buf[i] == 39))

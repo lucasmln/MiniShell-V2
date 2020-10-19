@@ -6,11 +6,22 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/13 15:49:10 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/15 18:54:31 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int			ft_init_set_parse(char *buf, int *ret)
+{
+	if (!buf[0])
+		return (1);
+	ft_check_env_var();
+	g_shell.i_p = -1;
+	g_shell.last_pip = 0;
+	*ret = -1000;
+	return (0);
+}
 
 int			ft_set_parse(char *buf)
 {
@@ -24,22 +35,14 @@ int			ft_set_parse(char *buf)
 			buf[ft_strlen(buf) - 1] = '\0';
 	ft_split_pipe(buf);
 	if (g_shell.error == -1)
-	{
-		ft_free_error(ERR_PIPE);
-		return (0);	
-	}
-	ft_check_env_var();
-	g_shell.i_p = -1;
-	g_shell.last_pip = 0;
-	ret = -1000;
+		return (ft_free_error(ERR_PIPE));
+	if (ft_init_set_parse(buf, &ret))
+		return (0);
 	while (g_shell.pip_str[++g_shell.i_p])
 	{
-        g_shell.error_input = 0;
+		g_shell.error_input = 0;
 		tmp = ft_strdup(g_shell.pip_str[g_shell.i_p]);
-		if (ret == -1000)
-			ret = ft_try_cmd(tmp);
-		else
-			ft_try_cmd(tmp);
+		ret == -1000 ? (ret = ft_try_cmd(tmp)) : ft_try_cmd(tmp);
 		ft_strdel(&g_shell.pip_str[g_shell.i_p]);
 		ft_close_fd();
 	}
@@ -83,15 +86,13 @@ int			ft_len_split(char *buf, char splitter)
 void		ft_add_split(char *buf, char **av, char splitter)
 {
 	int		i;
-	char	quote;
+	int		quote;
 	int		save;
 	int		k;
 
-	i = 0;
-	quote = 0;
-	k = 0;
-	save = 0;
-	while (buf[i])
+	ft_init_var(&i, &quote, &save, &k);
+	i = -1;
+	while (buf[++i])
 	{
 		if ((buf[i] == 39 || buf[i] == '"') && quote == 0)
 			quote = buf[i];
@@ -103,11 +104,9 @@ void		ft_add_split(char *buf, char **av, char splitter)
 			av[k++] = ft_strdup(&buf[save]);
 			buf[i++] = splitter;
 			ft_skip_space(buf, &i);
-			if (buf[i] == splitter)
-				g_shell.error = -1;
+			g_shell.error = buf[i] == splitter ? -1 : g_shell.error;
 			save = i;
 		}
-		i++;
 	}
 	av[k++] = ft_strdup(&buf[save]);
 	av[k] = NULL;
@@ -128,17 +127,18 @@ void		ft_split_semi_colons(char *buf)
 int			ft_check_parse(char *buf)
 {
 	int		i;
-	
+
 	g_shell.i_s = -1;
+	g_shell.tmp_ret = -100000;
 	while (g_shell.semi_colon[++g_shell.i_s])
 	{
 		g_shell.pip.i = 0;
 		g_shell.pip.len = 0;
 		g_shell.pid.i = 0;
 		g_shell.pid.len = 0;
+		g_shell.pos_error_in = -1;
 		if (!ft_set_parse(g_shell.semi_colon[g_shell.i_s]))
 			return (0);
-	//	ft_free_av(g_shell.pip_str);
 		i = -1;
 	}
 	return (1);

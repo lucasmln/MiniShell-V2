@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 13:09:43 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/12 15:05:07 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/15 15:09:18 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,34 @@ char		*ft_check_exist_var(char *str, int *i, int save, char c)
 	return (new);
 }
 
+char		*ft_last_ret(char *str, int *i)
+{
+	char	*new;
+
+	str[*i] = '\0';
+	new = NULL;
+	new = ft_str_add(ft_strdup(""), ft_strdup(str));
+	new = ft_str_add(new, ft_itoa(g_shell.ret));
+	str[*i] = '$';
+	new = ft_str_add(new, ft_strdup(&str[*i + 2]));
+	ft_strdel(&str);
+	return (new);
+}
+
+int			ft_check_replace_var(char *str, int *i, int *save, int *k)
+{
+	*save = *i;
+	if (str[*i + 1] && (str[*i + 1] == '"' || str[*i + 1] == '$'))
+	{
+		if (str[*i + 1] == '$')
+			*i += 1;
+		*i += 1;
+		return (1);
+	}
+	*k = *i;
+	return (0);
+}
+
 char		*ft_replace_var(char *str, int *i)
 {
 	int		save;
@@ -34,15 +62,10 @@ char		*ft_replace_var(char *str, int *i)
 	int		k;
 	char	*new;
 
-	save = *i;
-	if (str[*i + 1] && (str[*i + 1] == '"' || str[*i + 1] == '$'))
-	{
-		if (str[*i + 1] == '$')
-			*i += 1;
-		*i += 1;
+	if (str[*i + 1] && str[*i + 1] == '?')
+		return (ft_last_ret(str, i));
+	if (ft_check_replace_var(str, i, &save, &k))
 		return (str);
-	}
-	k = *i;
 	ft_go_to_char(str, i, ' ');
 	ft_go_to_char(str, &k, '"');
 	*i = k < *i ? k : *i;

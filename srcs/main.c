@@ -30,7 +30,6 @@ void		ft_get_signal(int code)
 	{
 		write(1, "quit\n", 5);
 	}
-	ft_printf(1, "code = %d\n", code);
 }
 
 int			main(int ac, char **av, const char **env)
@@ -45,7 +44,7 @@ int			main(int ac, char **av, const char **env)
 	signal(SIGQUIT, ft_get_signal);
 	while (1)
 	{
-	 	ft_print_prompt();
+		ft_print_prompt();
 		ft_free_all();
 	}
 	return (0);

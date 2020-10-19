@@ -27,9 +27,8 @@ int			ft_check_except_env(char *str, int *i)
 	return (0);
 }
 
-char		*ft_trim_spaces(char *var)
+int			ft_len_without_space(char *var)
 {
-	char	*str;
 	int		len;
 	int		i;
 
@@ -44,6 +43,16 @@ char		*ft_trim_spaces(char *var)
 			i++;
 		len++;
 	}
+	return (len);
+}
+
+char		*ft_trim_spaces(char *var)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	len = ft_len_without_space(var);
 	if (!(str = malloc(sizeof(char) * (len + 1))))
 		exit(-1000);
 	i = 0;
@@ -108,6 +117,15 @@ char		*ft_copy_env_var_without_quote(char *var)
 	return (new);
 }
 
+void		ft_init_exist_var(char *str, char quote[], int save[], int *k)
+{
+	*k = 0;
+	ft_go_to_char(g_shell.env[save[1]], k, '=');
+	quote[0] = ft_choose_good_quote(&g_shell.env[save[1]][*k + 2]);
+	quote[1] = '\0';
+	str[save[0]] = '\0';
+}
+
 char		*ft_exist_var(char *str, int save[], char c, int *i)
 {
 	int		k;
@@ -115,11 +133,7 @@ char		*ft_exist_var(char *str, int save[], char c, int *i)
 	char	*tmp;
 	char	quote[2];
 
-	k = 0;
-	ft_go_to_char(g_shell.env[save[1]], &k, '=');
-	quote[0] = ft_choose_good_quote(&g_shell.env[save[1]][k + 2]);
-	quote[1] = '\0';
-	str[save[0]] = '\0';
+	ft_init_exist_var(str, quote, save, &k);
 	new = ft_strdup(str);
 	if ((!g_shell.check && quote[0] == '"') || (quote[0] == 39))
 		new = ft_str_add(new, ft_strdup(quote));

@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 14:53:16 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/13 15:35:25 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/19 10:42:02 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,17 @@ char		**ft_create_argv(char *buf)
 	return (av);
 }
 
+void		ft_incremente_pip_and_pid(t_exe *ex)
+{
+	g_shell.pip.i++;
+	g_shell.pip.len++;
+	g_shell.pid.i++;
+	g_shell.pid.len++;
+	ft_strdel(&ex->full_cmd);
+}
+
 int			ft_exec_cmd(t_exe *ex, int find)
 {
-	ft_printf(1, "buf argv = |%s|\n", ex->buf);
 	ex->argv = ft_create_argv(ex->buf);
 	pipe(g_shell.pip.id[g_shell.pip.i]);
 	g_shell.pid.id[g_shell.pid.i] = fork();
@@ -80,12 +88,22 @@ int			ft_exec_cmd(t_exe *ex, int find)
 	close(g_shell.pip.id[g_shell.pip.i][1]);
 	if (!find)
 		ft_free_av(ex->argv);
-	g_shell.pip.i++;
-	g_shell.pip.len++;
-	g_shell.pid.i++;
-	g_shell.pid.len++;
-	ft_strdel(&ex->full_cmd);
+	ft_incremente_pip_and_pid(ex);
 	return (find);
+}
+
+int			ft_check_loop(t_exe *ex)
+{
+	ex->end_path = 0;
+	ex->start_path = 0;
+	if (!ft_strncmp(ex->cmd, "echo", ft_strlen(ex->cmd)) ||
+	!ft_strncmp(ex->cmd, "env", ft_strlen(ex->cmd)) ||
+							!ft_strncmp(ex->cmd, "pwd", ft_strlen(ex->cmd)))
+	{
+		ex->full_cmd = ft_add_path(ft_strdup(ex->cmd));
+		return (1);
+	}
+	return (0);
 }
 
 int			ft_loop_all_path(t_exe *ex)
@@ -95,14 +113,8 @@ int			ft_loop_all_path(t_exe *ex)
 	char			*tmp;
 	struct stat		info;
 
-	ex->end_path = 0;
-	ex->start_path = 0;
-	if (!ft_strncmp(ex->cmd, "echo", 4) || !ft_strncmp(ex->cmd, "env", 3) ||
-												!ft_strncmp(ex->cmd, "pwd", 3))
-	{
-		ex->full_cmd = ft_add_path(ft_strdup(ex->cmd));
+	if (ft_check_loop(ex))
 		return (ft_exec_cmd(ex, 1));
-	}
 	if (!(stat(ex->cmd, &info)))
 		find = 1;
 	ex->full_cmd = ft_strdup(ex->cmd);
