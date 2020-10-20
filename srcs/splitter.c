@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/15 18:54:31 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/20 16:11:22 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int			ft_set_parse(char *buf)
 	if (!g_shell.semi_colon[g_shell.i_s + 1])
 		if (buf[ft_strlen(buf) - 1] == '\n')
 			buf[ft_strlen(buf) - 1] = '\0';
-	ft_split_pipe(buf);
+	if (ft_split_pipe(buf) == -1)
+		return (0);
 	if (g_shell.error == -1)
 		return (ft_free_error(ERR_PIPE));
 	if (ft_init_set_parse(buf, &ret))
@@ -51,14 +52,20 @@ int			ft_set_parse(char *buf)
 	return (1);
 }
 
-void		ft_split_pipe(char *buf)
+int			ft_split_pipe(char *buf)
 {
 	int		len;
 
 	len = ft_len_split(buf, '|');
+	if (len >= 512)
+	{
+		ft_printf(1, "minishell: Error: more than 511 pipes\n");
+		return (-1);
+	}
 	if (!(g_shell.pip_str = malloc(sizeof(char *) * (len + 1))))
 		exit(-1000);
 	ft_add_split(buf, g_shell.pip_str, '|');
+	return (0);
 }
 
 int			ft_len_split(char *buf, char splitter)

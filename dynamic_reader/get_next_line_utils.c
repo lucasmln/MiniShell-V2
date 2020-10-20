@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_error.c                                         :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/12 18:49:02 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/12 18:50:12 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/11/06 13:26:35 by lmoulin           #+#    #+#             */
+/*   Updated: 2020/10/20 12:19:12 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CD_ERROR_C
-# define CD_ERROR_C
+#include "../includes/minishell.h"
 
-# define NOT_FOUND 1
-# define NO_HOME 2
-# define NO_PWD 3
-# define NOT_DIR 4
+size_t	ft_strlen2(const char *s)
+{
+	size_t len;
 
-#endif
+	if (!s)
+		return (0);
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
+}

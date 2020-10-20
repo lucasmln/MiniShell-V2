@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/15 17:00:58 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/20 16:12:17 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 # include "ft_printf.h"
 # include "color.h"
 # include "libft.h"
-# include "cd_error.c"
+# include "cd_error.h"
+# include "dynamic_read.h"
 
 # define BUF_SIZE 2048
 # define FD_MAX 512
@@ -103,7 +104,6 @@ void		ft_get_signal(int code);
 */
 void		ft_split_semi_colons(char *buf);
 int			ft_check_parse(char *buf);
-void		ft_split_pipe(char *buf);
 int			ft_len_split(char *buf, char splitter);
 void		ft_add_split(char *buf, char **av, char splitter);
 
@@ -125,6 +125,7 @@ int         ft_error_cd(char *buf, int type);
 /*
  ** ft_print_prompt.c
 */
+void		ft_print_prompt_2(void);
 int			ft_print_prompt(void);
 
 /*
@@ -212,6 +213,8 @@ char        *ft_exist_var(char *str, int save[], char c, int *i);
  ** splitter.c
 */
 int			ft_set_parse(char *buf);
+int			ft_split_pipe(char *buf);
+
 
 /*
  ** free.c

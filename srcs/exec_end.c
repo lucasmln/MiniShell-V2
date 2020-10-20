@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 17:23:38 by lucas             #+#    #+#             */
-/*   Updated: 2020/10/15 17:05:06 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/20 14:17:16 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void		ft_final_exec(int ret)
 		i++;
 	}
 	g_shell.ret = i > 0 ? res / 512 : g_shell.ret;
-	ft_printf(1, "ret tmp = %d\n", g_shell.tmp_ret);
 	g_shell.ret = g_shell.tmp_ret != -100000 ? g_shell.tmp_ret : g_shell.ret;
 	if (g_shell.pip.len == 0 || !ret)
 		return ;
