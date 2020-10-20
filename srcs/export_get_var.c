@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 18:01:55 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/14 18:03:59 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/20 18:01:25 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int			ft_check_already_exist_var(char *var)
 		ft_replace_var_in_all_env(var, i);
 	if (pos[0] == -1)
 	{
-		ft_printf(1, "pos = %d\n", pos[1]);
 		if (pos[0] == -1 && i)
 		{
 			tmp = ft_add_var_to_env(var, g_shell.env);
@@ -128,6 +127,7 @@ char		*ft_change_var(char *buf)
 		exit(-1000);
 	i = -1;
 	k = 0;
+	check = 0;
 	ft_go_to_char(tmp_str, &check, '=');
 	while (tmp_str[++i])
 	{

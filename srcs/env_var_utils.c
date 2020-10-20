@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 14:55:18 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/14 17:24:53 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/20 18:03:16 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char		ft_choose_good_quote(char *buf)
 	int		i;
 
 	i = 0;
-	while (buf[i])
+	while (buf[i + 1])
 	{
 		if (buf[i] == 39)
 			return ('"');

@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 12:09:00 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/20 14:05:39 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/20 18:03:02 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,7 @@ void		ft_add_input(t_reader *r, t_historique *h)
 
 	tmp = ft_new_tab(r->s, h->tab);
 	ft_free_av(h->tab);
-	/*i = -1;
-	while (h->tab[++i])
-		ft_strdel(&h->tab[i]);
-	free(h->tab);
-	h->tab = NULL;
-	*/h->tab = tmp;
+	h->tab = tmp;
 }
 
 char		**ft_new_tab(char *var, char **env)
