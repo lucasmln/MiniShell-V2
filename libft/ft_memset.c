@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 15:00:40 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/21 11:39:01 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/10/07 16:22:05 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/10/09 11:09:40 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <stdio.h>
 
-char	*ft_strncat(char *dest, const char c, int nb)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	int	i;
-	int	dest_size;
+	unsigned int	i;
+	char			*tab;
 
 	i = 0;
-	dest_size = 0;
-	while (dest[dest_size])
-		dest_size++;
-	while (i < nb)
+	tab = (char*)b;
+	while (i < len)
 	{
-		dest[dest_size] = c;
-		dest_size++;
+		*tab = c;
+		tab++;
 		i++;
 	}
-	dest[dest_size] = '\0';
-	return (dest);
+	return (b);
 }

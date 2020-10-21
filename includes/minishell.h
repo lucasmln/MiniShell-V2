@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/20 16:12:17 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 10:40:09 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <dirent.h>
+# include <errno.h>
 # include "ft_printf.h"
 # include "color.h"
 # include "libft.h"

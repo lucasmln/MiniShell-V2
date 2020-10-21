@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 15:00:40 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/21 11:39:01 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/10/07 19:27:18 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/10/16 14:47:21 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <stdlib.h>
 
-char	*ft_strncat(char *dest, const char c, int nb)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int	i;
-	int	dest_size;
+	int				i;
+	unsigned char	*d;
+	unsigned char	*s;
 
+	if (!dst && !src)
+		return (NULL);
+	d = (unsigned char*)dst;
+	s = (unsigned char*)src;
 	i = 0;
-	dest_size = 0;
-	while (dest[dest_size])
-		dest_size++;
-	while (i < nb)
+	while (n-- > 0)
 	{
-		dest[dest_size] = c;
-		dest_size++;
+		d[i] = s[i];
 		i++;
 	}
-	dest[dest_size] = '\0';
-	return (dest);
+	return (dst);
 }

@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 12:29:07 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/20 14:01:07 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 11:36:04 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ int			fill_history_a(t_historique *h, t_reader *r)
 		return (0);
 	close(fd);
 	ft_strdel(&r->s);
+	free_histo(r, h);
 	return (1);
 }

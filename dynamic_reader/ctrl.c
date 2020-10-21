@@ -6,13 +6,13 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 16:29:51 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/20 13:35:36 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 11:13:08 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		ctrl(t_reader *r)
+int			ctrl(t_reader *r)
 {
 	r->ent = 1;
 	write(1, "\n", 1);

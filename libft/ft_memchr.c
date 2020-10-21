@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 15:00:40 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/21 11:39:01 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/10/08 14:03:26 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/10/11 15:23:45 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <stdlib.h>
 
-char	*ft_strncat(char *dest, const char c, int nb)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	int	i;
-	int	dest_size;
+	char	*str;
+	int		i;
 
+	str = (char*)s;
 	i = 0;
-	dest_size = 0;
-	while (dest[dest_size])
-		dest_size++;
-	while (i < nb)
+	while (n-- > 0)
 	{
-		dest[dest_size] = c;
-		dest_size++;
+		if (str[i] == c)
+			return (str + i);
 		i++;
 	}
-	dest[dest_size] = '\0';
-	return (dest);
+	return (NULL);
 }

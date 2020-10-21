@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 18:01:55 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/20 18:01:25 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 11:50:47 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,27 @@ int			ft_check_already_exist_var(char *var)
 	int		pos[2];
 	int		i;
 	char	*test;
+	char	*t;
 	char	**tmp;
 
-	test = ft_get_pos_var(var, pos, &i);
+	t = ft_strdup(var);
+	test = ft_get_pos_var(t, pos, &i);
 	if (pos[1] != -1 && i)
-		ft_replace_var_in_all_env(var, i);
+		ft_replace_var_in_all_env(t, i);
 	if (pos[0] == -1)
 	{
 		if (pos[0] == -1 && i)
 		{
-			tmp = ft_add_var_to_env(var, g_shell.env);
+			tmp = ft_add_var_to_env(t, g_shell.env);
 			ft_free_av(g_shell.env);
 			g_shell.env = ft_avdup(tmp);
 			ft_free_av(tmp);
 		}
 		if (pos[1] == -1)
-			ft_add_to_export(tmp, var);
+			ft_add_to_export(tmp, t);
 	}
 	ft_strdel(&test);
+	ft_strdel(&t);
 	return (1);
 }
 
@@ -92,16 +95,19 @@ char		*ft_get_pos_var(char *var, int pos[], int *i)
 	int		k;
 	char	c;
 	char	*test;
+	char	*tmp;
 
 	k = 0;
-	ft_go_to_char(var, &k, '=');
-	c = var[k];
+	tmp = ft_strdup(var);
+	ft_go_to_char(tmp, &k, '=');
+	c = tmp[k];
 	*i = c == '\0' ? 0 : 1;
-	var[k] = '\0';
-	test = ft_str_add(ft_strdup(var), ft_strdup("="));
+	tmp[k] = '\0';
+	test = ft_str_add(ft_strdup(tmp), ft_strdup("="));
 	pos[0] = ft_find_var_in_av(g_shell.env, test);
 	pos[1] = ft_find_var_in_av(g_shell.sort_env, test);
-	var[k] = c;
+	tmp[k] = c;
+	ft_strdel(&tmp);
 	return (test);
 }
 
@@ -139,7 +145,6 @@ char		*ft_change_var(char *buf)
 		}
 		k++;
 	}
-	new = ft_change_var_utils(buf, new, k, check);
 	ft_strdel(&tmp_str);
-	return (new);
+	return ((new = ft_change_var_utils(buf, new, k, check)));
 }

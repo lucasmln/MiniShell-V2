@@ -6,11 +6,17 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 17:23:38 by lucas             #+#    #+#             */
-/*   Updated: 2020/10/20 14:17:16 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 11:47:49 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void		ft_error_ctr_c(int *res)
+{
+	write(1, "\n", 1);
+	*res = 130 * 512;
+}
 
 void		ft_final_exec(int ret)
 {
@@ -22,6 +28,8 @@ void		ft_final_exec(int ret)
 	while (i < g_shell.pid.len)
 	{
 		waitpid(g_shell.pid.id[i], &res, 0);
+		if (errno == res)
+			ft_error_ctr_c(&res);
 		if (g_shell.pip.len - 1 > i)
 			close(g_shell.pip.id[i][0]);
 		if (g_shell.pos_error_in != -1 && i == g_shell.pos_error_in)

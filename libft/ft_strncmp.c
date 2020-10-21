@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 15:00:40 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/21 11:39:01 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/10/07 12:28:13 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/10/31 16:21:56 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-char	*ft_strncat(char *dest, const char c, int nb)
+int		ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int	i;
-	int	dest_size;
+	size_t			i;
+	int				res;
 
 	i = 0;
-	dest_size = 0;
-	while (dest[dest_size])
-		dest_size++;
-	while (i < nb)
+	while (i < n && (s1[i] != '\0' || s2[i] != '\0'))
 	{
-		dest[dest_size] = c;
-		dest_size++;
+		res = (unsigned char)s1[i] - (unsigned char)s2[i];
+		if (res != 0)
+			return (res);
 		i++;
 	}
-	dest[dest_size] = '\0';
-	return (dest);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 12:44:57 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/20 16:28:39 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 11:38:25 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ void			fill_str(t_reader *r, t_keys *keys)
 {
 	char	*tmp;
 
-		if (!(tmp = malloc(sizeof(char) * (r->len + 2))))
-			exit(-1000);
-		ft_strlcpy(tmp, r->s, r->i + 1);
-		tmp[r->i] = r->c;
-		tmp[r->i + 1] = '\0';
-		ft_strlcpy(&tmp[r->i + 1], &r->s[r->i], ft_strlen(&r->s[r->i]) + 1);
-		ft_strdel(&r->s);
-		r->s = tmp;
+	if (!(tmp = malloc(sizeof(char) * (r->len + 2))))
+		exit(-1000);
+	ft_strlcpy(tmp, r->s, r->i + 1);
+	tmp[r->i] = r->c;
+	tmp[r->i + 1] = '\0';
+	ft_strlcpy(&tmp[r->i + 1], &r->s[r->i], ft_strlen(&r->s[r->i]) + 1);
+	ft_strdel(&r->s);
+	r->s = tmp;
 	r->i++;
 	r->len++;
 	ft_print_char(r, keys);
