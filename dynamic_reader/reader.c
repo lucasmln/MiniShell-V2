@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 12:44:57 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/21 11:38:25 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 14:33:48 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,6 @@ void			ft_reader(t_reader *r, t_keys *keys,
 		}
 		tcsetattr(0, 0, &term->backup);
 	}
+	g_shell.r = r;
+	g_shell.h = h;
 }

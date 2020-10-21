@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 10:40:09 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 14:33:37 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,29 +68,31 @@ typedef struct		s_exe
 
 typedef struct		s_minishell
 {
-	char	buf[BUF_SIZE + 1];
-	char	*str;
-	char	*dir;
-	char	**env;
-	int		len_env;
-	int		len_exp;
-	char	**sort_env;
-	char	**semi_colon;
-	char	**pip_str;
-	int		last_pip;
-	int		i_s;
-	int		i_p;
-	t_fd	out;
-	t_fd	in;
-	t_pid	pid;
-	t_pipe	pip;
-	char	check;
-	int		tmp_ret;
-	int		error;
-	int		error_input;
-	int		pos_error_in;
-	int		ret;
-	int		legal_exit;
+	char			buf[BUF_SIZE + 1];
+	char			*str;
+	char			*dir;
+	char			**env;
+	int				len_env;
+	int				len_exp;
+	char			**sort_env;
+	char			**semi_colon;
+	char			**pip_str;
+	int				last_pip;
+	int				i_s;
+	int				i_p;
+	t_fd			out;
+	t_fd			in;
+	t_pid			pid;
+	t_pipe			pip;
+	t_historique	*h;
+	t_reader		*r;
+	char			check;
+	int				tmp_ret;
+	int				error;
+	int				error_input;
+	int				pos_error_in;
+	int				ret;
+	int				legal_exit;
 }					t_minishell;
 
 t_minishell			g_shell;
