@@ -6,48 +6,11 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 18:04:19 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/14 19:22:24 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:11:27 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int			ft_error_unset(char *buf)
-{
-	char	*tmp;
-
-	tmp = ft_get_word(buf, 0);
-	ft_printf(1, "minishell: %s: command not found\n", tmp);
-	ft_strdel(&tmp);
-	g_shell.tmp_ret = 127;
-	return (1);
-}
-
-int			ft_check_error_unset(char *buf, int *start)
-{
-	int		i;
-	char	check;
-
-	i = 5;
-	if (!buf[i] || buf[i] == ' ')
-		return (0);
-	if (buf[i] != '"' && buf[i] != 39)
-		return (1);
-	check = buf[i];
-	while (buf[++i])
-	{
-		if (!check && buf[i] == ' ')
-			break ;
-		if (!check && (buf[i] == '"' || buf[i] == 39))
-			check = buf[i++];
-		if (buf[i] != check)
-			return (1);
-		if (check == buf[i])
-			check = 0;
-	}
-	*start = i;
-	return (0);
-}
 
 void		ft_del_word_in_env(int pos)
 {
@@ -102,25 +65,6 @@ int			ft_find_pos_in_av(char *word)
 	if (pos[1] != -1)
 		ft_del_word_in_export(pos[1]);
 	return (1);
-}
-
-int			ft_check_wrong_char_unset(char *var)
-{
-	int		i;
-
-	i = 0;
-	while (var[i] == '"' || var[i] == 39)
-		i++;
-	if (!ft_isalpha(var[i]) && var[i] != '_')
-		return (1);
-	while (var[i])
-	{
-		if (!ft_isalnum(var[i]) && var[i] != '_' &&
-											var[i] != '"' && var[i] != 39)
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 void		ft_loop_unset(char *word, char *buf, char *tmp, int start)

@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 18:01:55 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 11:50:47 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:06:43 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,6 @@ void		ft_replace_var_in_all_env(char *var, int check)
 		g_shell.env[pos[0]] = ft_strdup(var);
 	if (pos[1] != -1)
 		g_shell.sort_env[pos[1]] = ft_strdup(var);
-}
-
-void		ft_add_to_export(char **tmp, char *var)
-{
-	tmp = ft_add_var_to_env(var, g_shell.sort_env);
-	ft_free_av(g_shell.sort_env);
-	g_shell.sort_env = ft_avdup(tmp);
-	ft_free_av(tmp);
 }
 
 int			ft_check_already_exist_var(char *var)
@@ -109,15 +101,6 @@ char		*ft_get_pos_var(char *var, int pos[], int *i)
 	tmp[k] = c;
 	ft_strdel(&tmp);
 	return (test);
-}
-
-char		*ft_change_var_utils(char *buf, char *new, int k, int check)
-{
-	if (check == -1)
-		new[k++] = '"';
-	new[k] = '\0';
-	ft_strdel(&buf);
-	return (new);
 }
 
 char		*ft_change_var(char *buf)

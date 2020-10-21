@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 11:48:55 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 14:34:34 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:51:26 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void		ft_free_exit(void)
 	ft_strdel(&g_shell.dir);
 	if (!(fill_history_a(g_shell.h, g_shell.r)))
 		exit(1);
-	while (1)
-		;
 	exit(g_shell.ret);
 }
 

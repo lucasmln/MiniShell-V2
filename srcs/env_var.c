@@ -6,25 +6,11 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 13:09:43 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/20 17:42:25 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 14:59:10 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-char		*ft_check_exist_var(char *str, int *i, int save, char c)
-{
-	int		pos[2];
-	char	*new;
-
-	pos[0] = save;
-	pos[1] = ft_find_var_in_av(g_shell.env, &str[save + 1]);
-	if (pos[1] == -1)
-		new = ft_inexist_var(str, save, c, i);
-	else
-		new = ft_exist_var(str, pos, c, i);
-	return (new);
-}
 
 char		*ft_last_ret(char *str, int *i)
 {

@@ -6,32 +6,11 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 14:53:16 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 11:45:11 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:04:45 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void		ft_fill_argv(char **av, char *buf)
-{
-	int		i;
-	int		start;
-	int		l;
-	char	c;
-
-	i = 0;
-	start = 0;
-	l = 0;
-	while (ft_pass_word(buf, &i))
-	{
-		c = buf[i];
-		buf[i] = '\0';
-		av[l++] = ft_strdup(&buf[start]);
-		start = i;
-		buf[i] = c;
-	}
-	av[l] = NULL;
-}
 
 char		**ft_create_argv(char *buf)
 {
@@ -52,15 +31,6 @@ char		**ft_create_argv(char *buf)
 	while (av[++i])
 		av[i] = ft_del_quote_av(av[i]);
 	return (av);
-}
-
-void		ft_incremente_pip_and_pid(t_exe *ex)
-{
-	g_shell.pip.i++;
-	g_shell.pip.len++;
-	g_shell.pid.i++;
-	g_shell.pid.len++;
-	ft_strdel(&ex->full_cmd);
 }
 
 int			ft_exec_cmd(t_exe *ex, int find)

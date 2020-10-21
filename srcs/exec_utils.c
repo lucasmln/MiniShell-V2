@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 17:17:22 by lucas             #+#    #+#             */
-/*   Updated: 2020/10/12 12:49:33 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:04:41 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,34 @@ char		*ft_del_quote_av(char *s)
 	new = ft_copy_without_quote(trim, len);
 	ft_strdel(&trim);
 	return (new);
+}
+
+void		ft_incremente_pip_and_pid(t_exe *ex)
+{
+	g_shell.pip.i++;
+	g_shell.pip.len++;
+	g_shell.pid.i++;
+	g_shell.pid.len++;
+	ft_strdel(&ex->full_cmd);
+}
+
+void		ft_fill_argv(char **av, char *buf)
+{
+	int		i;
+	int		start;
+	int		l;
+	char	c;
+
+	i = 0;
+	start = 0;
+	l = 0;
+	while (ft_pass_word(buf, &i))
+	{
+		c = buf[i];
+		buf[i] = '\0';
+		av[l++] = ft_strdup(&buf[start]);
+		start = i;
+		buf[i] = c;
+	}
+	av[l] = NULL;
 }

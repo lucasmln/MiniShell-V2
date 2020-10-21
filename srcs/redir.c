@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:01:39 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/15 17:01:29 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:07:33 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,6 @@ int			ft_redir_input(char *buf, int *i)
 	g_shell.in.i++;
 	g_shell.in.len++;
 	return (1);
-}
-
-int			ft_init_redir(char *buf, int *i, int *check)
-{
-	g_shell.out.i = 0;
-	g_shell.out.len = 0;
-	g_shell.in.i = 0;
-	g_shell.in.len = 0;
-	if (ft_check_error_redir(buf))
-	{
-		ft_strdel(&buf);
-		return (1);
-	}
-	*i = 0;
-	*check = 0;
-	return (0);
 }
 
 int			ft_cond_chekc_redir(char *buf, int *i, int check)

@@ -6,22 +6,11 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/20 16:11:22 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:02:15 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int			ft_init_set_parse(char *buf, int *ret)
-{
-	if (!buf[0])
-		return (1);
-	ft_check_env_var();
-	g_shell.i_p = -1;
-	g_shell.last_pip = 0;
-	*ret = -1000;
-	return (0);
-}
 
 int			ft_set_parse(char *buf)
 {
@@ -66,28 +55,6 @@ int			ft_split_pipe(char *buf)
 		exit(-1000);
 	ft_add_split(buf, g_shell.pip_str, '|');
 	return (0);
-}
-
-int			ft_len_split(char *buf, char splitter)
-{
-	int		i;
-	int		len;
-	int		quote;
-
-	i = 0;
-	len = 1;
-	quote = 0;
-	while (buf[i])
-	{
-		if ((buf[i] == 39 || buf[i] == '"') && quote == 0)
-			quote = buf[i];
-		else if (buf[i] == quote)
-			quote = 0;
-		else if (buf[i] == splitter && quote == 0)
-			len++;
-		i++;
-	}
-	return (len);
 }
 
 void		ft_add_split(char *buf, char **av, char splitter)

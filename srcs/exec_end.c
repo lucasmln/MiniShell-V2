@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 17:23:38 by lucas             #+#    #+#             */
-/*   Updated: 2020/10/21 11:47:49 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:56:26 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		ft_final_exec(int ret)
 	while (i < g_shell.pid.len)
 	{
 		waitpid(g_shell.pid.id[i], &res, 0);
-		if (errno == res)
+		if (errno && errno == res)
 			ft_error_ctr_c(&res);
 		if (g_shell.pip.len - 1 > i)
 			close(g_shell.pip.id[i][0]);

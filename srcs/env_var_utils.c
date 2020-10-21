@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 14:55:18 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/20 18:03:16 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 14:51:58 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,49 +27,6 @@ int			ft_check_except_env(char *str, int *i)
 	return (0);
 }
 
-int			ft_len_without_space(char *var)
-{
-	int		len;
-	int		i;
-
-	len = 0;
-	i = 0;
-	while (var[i])
-	{
-		if (var[i] == ' ')
-			while (var[i] == ' ')
-				i++;
-		else
-			i++;
-		len++;
-	}
-	return (len);
-}
-
-char		*ft_trim_spaces(char *var)
-{
-	char	*str;
-	int		len;
-	int		i;
-
-	len = ft_len_without_space(var);
-	if (!(str = malloc(sizeof(char) * (len + 1))))
-		exit(-1000);
-	i = 0;
-	len = 0;
-	while (var[i])
-	{
-		str[len++] = var[i];
-		if (var[i] == ' ')
-			while (var[i] == ' ')
-				i++;
-		else
-			i++;
-	}
-	str[len] = '\0';
-	return (str);
-}
-
 char		*ft_inexist_var(char *str, int save, char c, int *i)
 {
 	char	*new;
@@ -82,22 +39,6 @@ char		*ft_inexist_var(char *str, int save, char c, int *i)
 	if (c != '\0')
 		new = ft_str_add(new, ft_strdup(&str[*i + 1]));
 	return (new);
-}
-
-char		ft_choose_good_quote(char *buf)
-{
-	int		i;
-
-	i = 0;
-	while (buf[i + 1])
-	{
-		if (buf[i] == 39)
-			return ('"');
-		else if (buf[i] == '"')
-			return (39);
-		i++;
-	}
-	return ('"');
 }
 
 char		*ft_copy_env_var_without_quote(char *var)

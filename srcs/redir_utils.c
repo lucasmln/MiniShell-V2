@@ -6,34 +6,11 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 17:02:30 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/14 18:07:26 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 15:08:12 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int			ft_check_error_redir(char *buf)
-{
-	int		i;
-
-	i = -1;
-	while (buf[++i])
-	{
-		if (buf[i] == '>' || buf[i] == '<')
-		{
-			i++;
-			if (buf[i] && buf[i] == '>')
-				i++;
-			ft_skip_space(buf, &i);
-			if (buf[i] == '\0' || buf[i] == '<' || buf[i] == '>')
-			{
-				ft_printf(1, "minishell: syntax error near unexpected token\n");
-				return ((g_shell.ret = 258));
-			}
-		}
-	}
-	return (0);
-}
 
 void		ft_skip_redir(char *buf, int *i)
 {
