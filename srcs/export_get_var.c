@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_get_var.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 18:01:55 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 15:06:43 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 18:19:35 by jvaquer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char		**ft_add_var_to_env(char *var, char **env)
 	return (new);
 }
 
-void		ft_replace_var_in_all_env(char *var, int check)
+void		ft_replace_var_in_all_env(char *var)
 {
 	int		pos[2];
 	int		i;
@@ -64,7 +64,7 @@ int			ft_check_already_exist_var(char *var)
 	t = ft_strdup(var);
 	test = ft_get_pos_var(t, pos, &i);
 	if (pos[1] != -1 && i)
-		ft_replace_var_in_all_env(t, i);
+		ft_replace_var_in_all_env(t);
 	if (pos[0] == -1)
 	{
 		if (pos[0] == -1 && i)
@@ -108,7 +108,7 @@ char		*ft_change_var(char *buf)
 	char	*tmp_str;
 	char	*new;
 	int		i;
-	char	k;
+	int		k;
 	int		check;
 
 	tmp_str = ft_copy_without_quote(buf, ft_strlen(buf));

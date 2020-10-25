@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 15:54:49 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/24 14:03:57 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # define FD_MAX 512
 # define ERR_SEMI_COLONS -2
 # define ERR_PIPE -3
+# define LLMAX "9223372036854775807"
+# define LLMIN "9223372036854775808"
+# define ARG_NUM "minishell: exit: %s argument numerique necessaire\n"
 
 typedef struct		s_fd
 {
@@ -134,16 +137,17 @@ int					ft_check_replace_var(char *str, int *i, int *save, int *k);
 char				*ft_replace_var(char *str, int *i);
 char				*ft_get_env_var(char *str);
 void				ft_check_env_var(void);
+int					ft_exportable_char(char c, int first);
 
 /*
  ** env_var_utils.c
 */
 int					ft_check_except_env(char *str, int *i);
-char				*ft_inexist_var(char *str, int save, char c, int *i);
+char				*ft_inexist_var(char *str, int *i);
 char				*ft_copy_env_var_without_quote(char *var);
 void				ft_init_exist_var(char *str, char quote[], int save[],
 																		int *k);
-char				*ft_exist_var(char *str, int save[], char c, int *i);
+char				*ft_exist_var(char *str, char *word, int pos, int *i);
 
 /*
  ** exec.c
@@ -179,7 +183,7 @@ int					ft_check_exit(char *buf);
 /*
  ** export.c
 */
-void				ft_add_var(char *buf, int start);
+void				ft_add_var(char *buf, char *word, int start);
 char				*ft_switch_word(char *word);
 int					ft_incremente_export(char *word);
 int					ft_export(char *buf);
@@ -197,7 +201,7 @@ int					ft_check_error_redir(char *buf);
  ** export_get_var.c
 */
 char				**ft_add_var_to_env(char *var, char **env);
-void				ft_replace_var_in_all_env(char *var, int check);
+void				ft_replace_var_in_all_env(char *var);
 int					ft_check_already_exist_var(char *var);
 char				*ft_get_pos_var(char *var, int pos[], int *i);
 char				*ft_change_var(char *buf);
@@ -218,7 +222,7 @@ void				ft_get_signal(int code);
  ** parse.c
 */
 void				ft_split_semi_colons(char *buf);
-int					ft_check_parse(char *buf);
+int					ft_check_parse(void);
 int					ft_len_split(char *buf, char splitter);
 void				ft_add_split(char *buf, char **av, char splitter);
 
@@ -297,13 +301,14 @@ int					ft_set_parse(char *buf);
 int					ft_split_pipe(char *buf);
 void				ft_add_split(char *buf, char **av, char splitter);
 void				ft_split_semi_colons(char *buf);
-int					ft_check_parse(char *buf);
+int					ft_check_parse(void);
 
 /*
  ** splitter_utils.c
 */
 int					ft_init_set_parse(char *buf, int *ret);
 int					ft_len_split(char *buf, char splitter);
+int					ft_check_empty_redir(void);
 
 /*
  ** unset.c
@@ -329,7 +334,8 @@ int					ft_error_open_fd(char *buf);
 char				*ft_trim_spaces(char *var);
 char				ft_choose_good_quote(char *buf);
 int					ft_len_without_space(char *var);
-char				*ft_check_exist_var(char *str, int *i, int save, char c);
+char				*ft_check_exist_var(char *str, char *word, int i);
 int					ft_init_redir(char *buf, int *i, int *check);
+char				*ft_del_char(char *s, int pos);
 
 #endif

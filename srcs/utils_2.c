@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 14:50:26 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 15:51:28 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/25 17:43:49 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,6 @@ int			ft_len_without_space(char *var)
 	return (len);
 }
 
-char		*ft_check_exist_var(char *str, int *i, int save, char c)
-{
-	int		pos[2];
-	char	*new;
-
-	pos[0] = save;
-	pos[1] = ft_find_var_in_av(g_shell.env, &str[save + 1]);
-	if (pos[1] == -1)
-		new = ft_inexist_var(str, save, c, i);
-	else
-		new = ft_exist_var(str, pos, c, i);
-	return (new);
-}
-
 int			ft_init_redir(char *buf, int *i, int *check)
 {
 	g_shell.out.i = 0;
@@ -99,4 +85,25 @@ int			ft_init_redir(char *buf, int *i, int *check)
 	*i = 0;
 	*check = 0;
 	return (0);
+}
+
+char		*ft_del_char(char *s, int pos)
+{
+	char	*new;
+	int		i;
+	int		k;
+
+	i = 0;
+	k = 0;
+	if (!(new = malloc(sizeof(char) * (ft_strlen(s)))))
+		exit(-1000);
+	while (s[i])
+	{
+		if (i != pos)
+			new[k++] = s[i++];
+		if (i == pos)
+			i++;
+	}
+	new[k] = '\0';
+	return (new);
 }

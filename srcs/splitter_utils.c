@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   splitter_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/21 15:02:52 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 15:02:54 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/22 11:47:08 by jvaquer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,48 @@ int			ft_len_split(char *buf, char splitter)
 		i++;
 	}
 	return (len);
+}
+
+int			ft_check_str_redir(char *str)
+{
+	int		i;
+	int		found;
+
+	i = 0;
+	found = 0;
+	while (str[i])
+	{
+		if (str[i] == '>' || str[i] == '<')
+			found = 1;
+		else if (found && (str[i] > ' ' && str[i] < '~'))
+			found = 0;
+		else if (str[i] == 39)
+			ft_go_to_char(str, &i, 39);
+		else if (str[i] == '"')
+			ft_go_to_char(str, &i, '"');
+		else if (str[i] == '|' && found)
+			break ;
+		i++;
+	}
+	return (found);
+}
+
+int			ft_check_empty_redir(void)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (g_shell.semi_colon[i])
+	{
+		if (ft_check_str_redir(g_shell.semi_colon[i]))
+		{
+			ft_printf(1,
+				"minishell: syntax error near unexpected token `newline'\n");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }

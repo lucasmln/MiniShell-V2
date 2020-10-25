@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 17:02:30 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 15:08:12 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 18:20:57 by jvaquer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ char		*ft_del_redir(char *buf)
 {
 	char	*new;
 	int		len;
-	int		i;
 
 	len = ft_len_without_redir(buf);
 	if (!(new = malloc(sizeof(char) * (len + 1))))

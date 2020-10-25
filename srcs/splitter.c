@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 16:04:52 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/22 17:28:43 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@ int			ft_set_parse(char *buf)
 {
 	char		*tmp;
 	int			ret;
-	int			i;
 
 	ft_init_fd_tab();
-	if (!g_shell.semi_colon[g_shell.i_s + 1])
-		if (buf[ft_strlen(buf) - 1] == '\n')
-			buf[ft_strlen(buf) - 1] = '\0';
 	if (ft_split_pipe(buf) == -1)
 		return (0);
 	if (g_shell.error == -1)
@@ -98,12 +94,14 @@ void		ft_split_semi_colons(char *buf)
 	g_shell.i_p = 0;
 }
 
-int			ft_check_parse(char *buf)
+int			ft_check_parse(void)
 {
 	int		i;
 
 	g_shell.i_s = -1;
 	g_shell.tmp_ret = -100000;
+	if (ft_check_empty_redir())
+		return (0);
 	while (g_shell.semi_colon[++g_shell.i_s])
 	{
 		g_shell.pip.i = 0;

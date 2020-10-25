@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 11:48:55 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 15:51:26 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/22 15:35:55 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,42 @@ void		ft_free_exit(void)
 	exit(g_shell.ret);
 }
 
+int			ft_len_nb_successif(char *buf)
+{
+	int		len;
+	int		i;
+
+	len = 0;
+	i = buf[0] == '-' ? 1 : 0;
+	while (ft_isdigit(buf[len + i]))
+		len++;
+	return (len);
+}
+
+int			ft_too_high(char *buf)
+{
+	int		neg;
+
+	neg = buf[0] == '-' ? 1 : 0;
+	if (ft_len_nb_successif(&buf[neg]) < 18)
+		return (0);
+	if (ft_len_nb_successif(&buf[neg]) > 19)
+		return (1);
+	if (neg && ft_strncmp(&buf[neg], LLMAX, ft_strlen(&buf[neg])) > 0)
+		return (1);
+	if (!neg && ft_strncmp(&buf[neg], LLMIN, ft_strlen(&buf[neg])) > 0)
+		return (1);
+	return (0);
+}
+
 int			ft_check_exit_utils(char *buf, int i)
 {
-	int		nb;
+	int					nb;
+	int					neg;
 
-	while (buf[i])
+	neg = buf[i] == '-' ? 1 : 0;
+	i = neg + i - 1;
+	while (buf[++i])
 	{
 		nb = ft_isdigit(buf[i]) ? 1 : 0;
 		if (buf[i] == ' ' && buf[i + 1] && buf[i + 1] != ' ')
@@ -40,14 +71,14 @@ int			ft_check_exit_utils(char *buf, int i)
 		}
 		if (!ft_isdigit(buf[i]) && buf[i] != ' ')
 		{
-			ft_printf(1,
-				"minishell: exit: %s argument numérique nécessaire\n", &buf[5]);
+			ft_printf(1, ARG_NUM, &buf[5]);
 			return ((g_shell.ret = 2) - 1);
 		}
-		i++;
 	}
 	if (nb)
-		g_shell.ret = ft_atoi(&buf[5]);
+		g_shell.ret = ft_atoll(&buf[5]);
+	if (ft_too_high(&buf[5]))
+		ft_printf(1, ARG_NUM, &buf[5]);
 	return (1);
 }
 

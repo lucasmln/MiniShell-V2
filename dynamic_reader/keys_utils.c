@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 12:09:00 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/21 11:23:45 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/22 17:36:41 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void		ft_kdown_zero(t_reader *r, t_historique *h, t_keys *keys)
 void		ft_add_input(t_reader *r, t_historique *h)
 {
 	char	**tmp;
-	int		i;
 
 	tmp = ft_new_tab(r->s, h->tab);
 	ft_free_av(h->tab);

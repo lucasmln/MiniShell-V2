@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/11 17:23:38 by lucas             #+#    #+#             */
-/*   Updated: 2020/10/21 15:56:26 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/24 13:31:29 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		ft_error_ctr_c(int *res)
 {
 	write(1, "\n", 1);
-	*res = 130 * 512;
+	*res = 130 * 256;
 }
 
 void		ft_final_exec(int ret)
@@ -33,10 +33,12 @@ void		ft_final_exec(int ret)
 		if (g_shell.pip.len - 1 > i)
 			close(g_shell.pip.id[i][0]);
 		if (g_shell.pos_error_in != -1 && i == g_shell.pos_error_in)
-			res = 512;
+			res = 256;
 		i++;
 	}
-	g_shell.ret = i > 0 ? res / 512 : g_shell.ret;
+	if (g_shell.pos_error_in != -1 && i == g_shell.pos_error_in)
+		res = 256;
+	g_shell.ret = i >= 0 ? res / 256 : g_shell.ret;
 	g_shell.ret = g_shell.tmp_ret != -100000 ? g_shell.tmp_ret : g_shell.ret;
 	if (g_shell.pip.len == 0 || !ret)
 		return ;

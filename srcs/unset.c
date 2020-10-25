@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 18:04:19 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 15:11:27 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/22 17:56:37 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ void		ft_del_word_in_export(int pos)
 int			ft_find_pos_in_av(char *word)
 {
 	int		pos[2];
-	char	**tmp;
 	char	*equal;
-	int		i;
-	int		k;
 
 	equal = ft_str_add(ft_strdup(word), ft_strdup("="));
 	pos[0] = ft_find_var_in_av(g_shell.env, equal);
@@ -99,10 +96,11 @@ int			ft_unset(char *buf)
 	if (ft_check_error_unset(buf, &start))
 		return (ft_error_unset(buf));
 	i = 0;
-	word = ft_get_word(buf, 0);
+	word = ft_get_word(buf, i);
 	tmp = ft_strtrim(word, " ");
 	ft_strdel(&word);
-	word = tmp;
+	word = ft_strdup(tmp);
+	ft_strdel(&tmp);
 	ft_loop_unset(word, buf, tmp, start);
 	close(g_shell.pip.id[g_shell.pip.i][1]);
 	g_shell.pip.i++;

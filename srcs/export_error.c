@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 17:57:35 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 15:08:06 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 18:07:59 by jvaquer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int			ft_check_error_var(char *var)
 {
 	int		i;
 	char	*buf;
-	char	**tmp;
 
 	i = 0;
 	ft_skip_quote(var, &i);

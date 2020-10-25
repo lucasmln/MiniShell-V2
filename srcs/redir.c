@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 15:01:39 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 16:00:56 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/24 13:27:31 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int			ft_redir_output(char *buf, int *i, int type)
 {
-	int		save;
-	char	c;
 	char	*name;
 	char	rd[BUF_SIZE];
 
@@ -65,8 +63,6 @@ int			ft_redir_input(char *buf, int *i)
 {
 	int		save;
 	char	*name;
-	char	*tmp;
-	char	c;
 
 	*i += 1;
 	save = *i;

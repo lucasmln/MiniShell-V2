@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 12:44:57 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/21 14:33:48 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/22 17:38:01 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void			fill_str(t_reader *r, t_keys *keys)
 	tmp[r->i + 1] = '\0';
 	ft_strlcpy(&tmp[r->i + 1], &r->s[r->i], ft_strlen(&r->s[r->i]) + 1);
 	ft_strdel(&r->s);
-	r->s = tmp;
+	r->s = ft_strdup(tmp);
+	ft_strdel(&tmp);
 	r->i++;
 	r->len++;
 	ft_print_char(r, keys);
@@ -86,6 +87,10 @@ void			ft_reader(t_reader *r, t_keys *keys,
 		tcsetattr(0, 0, &term->set);
 		r->c = 0;
 		read(0, &r->c, 1);
+		if (r->c == 9 && ft_strlen(r->s) > 0)
+			r->tab++;
+		if (r->tab == 2 && ft_strlen(r->s) > 0)
+			ft_kenter2(r, h);
 		if ((r->c >= ' ' && r->c <= '~') && ft_strlen(r->k) == 0)
 			fill_str(r, keys);
 		if (r->c == 27 || ft_strlen(r->k) > 0)
@@ -95,10 +100,7 @@ void			ft_reader(t_reader *r, t_keys *keys,
 		if (ft_strlen(r->k) >= 3)
 			ft_memset(r->k, 0, 4);
 		if (r->c == '\n')
-		{
-			write(1, "\n", 1);
 			ft_kenter(r, h);
-		}
 		tcsetattr(0, 0, &term->backup);
 	}
 	g_shell.r = r;

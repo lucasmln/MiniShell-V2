@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 15:08:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/19 19:03:52 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 17:58:56 by jvaquer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int			ft_cd_back(void)
 {
 	int		i;
 	int		k;
-	char	*tmp;
 	char	*path;
 
 	i = ft_find_var_in_av(g_shell.env, "OLDPWD=");

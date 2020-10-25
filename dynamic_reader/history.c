@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 12:29:07 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/21 11:36:04 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/21 18:55:52 by jvaquer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,6 @@ int			fill_history_a(t_historique *h, t_reader *r)
 		return (0);
 	close(fd);
 	ft_strdel(&r->s);
-	free_histo(r, h);
+	free_histo(h);
 	return (1);
 }

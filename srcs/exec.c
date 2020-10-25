@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 14:53:16 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 15:04:45 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/23 01:00:18 by jvaquer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ int			ft_check_loop(t_exe *ex)
 
 int			ft_loop_all_path(t_exe *ex)
 {
-	int				i;
 	int				find;
 	char			*tmp;
 	struct stat		info;
 
+	find = 0;
 	if (ft_check_loop(ex))
 		return (ft_exec_cmd(ex, 1));
 	if (!(stat(ex->cmd, &info)))
@@ -108,7 +108,6 @@ int			ft_get_cmd(char *buf)
 {
 	int		i;
 	int		k;
-	int		pos;
 	t_exe	ex;
 
 	i = -1;
@@ -121,7 +120,10 @@ int			ft_get_cmd(char *buf)
 	if ((k = ft_loop_all_path(&ex)))
 		ft_free_av(ex.argv);
 	else
+	{
+		g_shell.tmp_ret = 127;
 		ft_printf(1, "minishell: command not found: %s\n", ex.cmd);
+	}
 	ft_free_ex(ex);
 	return (k);
 }

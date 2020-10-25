@@ -5,6 +5,7 @@ NAMED			= bonus.a
 CFLAGS			= -Wall -Wextra -Werror
 
 SRC				=	ft_atoi.c\
+					ft_atoll.c\
 					ft_bzero.c\
 					ft_calloc.c\
 					ft_isalnum.c\

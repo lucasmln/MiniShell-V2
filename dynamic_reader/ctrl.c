@@ -6,7 +6,7 @@
 /*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 16:29:51 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/21 11:13:08 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/22 17:37:32 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int			ctrl(t_reader *r)
 {
+	int		save;
+
 	r->ent = 1;
+	save = g_shell.ret;
 	write(1, "\n", 1);
 	if (r->c == 3)
 		r->s = ft_strdup("\n");

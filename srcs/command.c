@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 11:29:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/19 10:34:30 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/23 00:51:28 by jvaquer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char		*ft_add_path(char *buf)
 {
 	char	*new;
-	char	*tmp;
 
 	new = NULL;
 	if ((!ft_strncmp(buf, "pwd", 3) && ft_strlen(buf) == 3) ||
@@ -44,12 +43,14 @@ int			ft_try_cmd(char *buf)
 	int		ret;
 	char	*tmp;
 
+	ret = 0;
 	if (ft_check_redir(buf))
 		return (g_shell.ret);
 	buf = ft_del_redir(buf);
 	tmp = ft_strtrim(buf, " ");
 	ft_strdel(&buf);
-	buf = tmp;
+	buf = ft_strdup(tmp);
+	ft_strdel(&tmp);
 	if (!ft_strncmp(buf, "cd", 2))
 		ret = ft_cd(buf);
 	else if (!ft_strncmp(buf, "export", ft_strlen("export")))
