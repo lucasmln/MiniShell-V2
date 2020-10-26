@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   splitter.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 12:45:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/22 17:28:43 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/26 23:11:00 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void		ft_add_split(char *buf, char **av, char splitter)
 			buf[i++] = splitter;
 			ft_skip_space(buf, &i);
 			g_shell.error = buf[i] == splitter ? -1 : g_shell.error;
-			save = i;
+			save = i--;
 		}
 	}
 	av[k++] = ft_strdup(&buf[save]);
