@@ -41,6 +41,8 @@ SRC				=	ft_atoi.c\
 					ft_tolower.c\
 					ft_toupper.c\
 					ft_skip_space.c\
+					ft_avlen.c\
+					ft_avdup.c\
 
 SRCB			=	ft_lstadd_back_bonus.c\
 					ft_lstadd_front_bonus.c\

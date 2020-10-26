@@ -18,11 +18,22 @@ void		ft_error_ctr_c(int *res)
 	*res = 130 * 256;
 }
 
+void		ft_print_final_exec(void)
+{
+	char	buf[BUF_SIZE + 1];
+	int		res;
+
+	while ((res = read(g_shell.pip.id[g_shell.pip.len - 1][0], buf, BUF_SIZE)))
+	{
+		buf[res] = '\0';
+		write(1, buf, res);
+	}
+}
+
 void		ft_final_exec(int ret)
 {
 	int		i;
 	int		res;
-	char	buf[BUF_SIZE + 1];
 
 	i = 0;
 	while (i < g_shell.pid.len)
@@ -42,9 +53,5 @@ void		ft_final_exec(int ret)
 	g_shell.ret = g_shell.tmp_ret != -100000 ? g_shell.tmp_ret : g_shell.ret;
 	if (g_shell.pip.len == 0 || !ret)
 		return ;
-	while ((res = read(g_shell.pip.id[g_shell.pip.len - 1][0], buf, BUF_SIZE)))
-	{
-		buf[res] = '\0';
-		write(1, buf, res);
-	}
+	ft_print_final_exec();
 }

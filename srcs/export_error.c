@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 17:57:35 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/21 18:07:59 by jvaquer          ###   ########.fr       */
+/*   Updated: 2020/10/26 14:47:39 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,6 @@ int			ft_check_error_export(char *buf)
 	return (cmp % 2 == 0 ? NOT_FOUND : 0);
 }
 
-int			ft_check_error_var(char *var)
-{
-	int		i;
-	char	*buf;
-
-	i = 0;
-	ft_skip_quote(var, &i);
-	i--;
-	if (ft_check_wrong_char(var) || !var[i])
-	{
-		ft_printf(1, "minishell: export: %s: not a valid identifier\n", var);
-		return (1);
-	}
-	i = 0;
-	buf = ft_strdup(var);
-	buf = ft_change_var(buf);
-	ft_check_already_exist_var(buf);
-	ft_strdel(&buf);
-	return (1);
-}
-
 int			ft_check_wrong_char(char *var)
 {
 	int		i;
@@ -119,4 +98,10 @@ int			ft_check_error_redir(char *buf)
 		}
 	}
 	return (0);
+}
+
+int			ft_error_open_fd(char *buf)
+{
+	ft_strdel(&buf);
+	return ((g_shell.ret = 1));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 17:54:59 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/19 10:51:52 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/26 16:25:41 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ void		ft_skip_quote(char *buf, int *i)
 				return ;
 		}
 		else if (buf[*i] != '"' && buf[*i] != 39)
-		{
-			*i += 1;
 			return ;
-		}
 		else
 			*i += 1;
 	}
@@ -80,28 +77,26 @@ char		*ft_get_word_with_quote(char *buf)
 	return (new);
 }
 
-int			ft_avlen(char **env)
+void		ft_switch_word(char **word, char **tmp)
 {
-	int		i;
-
-	i = 0;
-	if (!env)
-		return (0);
-	while (env[i])
-		i++;
-	return (i);
+	ft_strdel(word);
+	*word = ft_strdup(*tmp);
+	ft_strdel(tmp);
 }
 
-char		**ft_avdup(char **env)
+int			ft_incremente_export(char *word)
 {
-	char	**new;
-	int		i;
+	close(g_shell.pip.id[g_shell.pip.i][1]);
+	g_shell.pip.i++;
+	g_shell.pip.len++;
+	(void)word;
+	return (1);
+}
 
-	if (!(new = malloc(sizeof(char *) * (ft_avlen(env) + 1))))
-		exit(-1000);
-	i = -1;
-	while (env[++i])
-		new[i] = ft_strdup(env[i]);
-	new[i] = NULL;
-	return (new);
+void		ft_incremente_start(char *buf, int *start, int init)
+{
+	if (init)
+		*start = 6;
+	ft_skip_space(buf, start);
+	ft_skip_quote(buf, start);
 }

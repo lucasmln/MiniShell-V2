@@ -107,9 +107,3 @@ int			ft_find_var_in_av(char **av, char *str)
 	}
 	return (-1);
 }
-
-int			ft_error_open_fd(char *buf)
-{
-	ft_strdel(&buf);
-	return ((g_shell.ret = 1));
-}

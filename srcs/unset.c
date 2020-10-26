@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoulin <lmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 18:04:19 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/22 17:56:37 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/10/26 16:08:02 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ void		ft_loop_unset(char *word, char *buf, char *tmp, int start)
 					"minishell: export: %s: not a valid identifier\n", word);
 		else
 			ft_find_pos_in_av(word);
-		start += ft_strlen(word) + 1;
+		start += ft_strlen(word);
+		if (!buf[start])
+			break ;
 		ft_strdel(&word);
 		ft_skip_space(buf, &start);
 		word = ft_get_word(&buf[start], 0);

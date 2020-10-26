@@ -12,40 +12,18 @@
 
 #include "../includes/minishell.h"
 
-char		*ft_last_ret(char *str, int *i)
-{
-	char	*new;
-
-	str[*i] = '\0';
-	new = NULL;
-	new = ft_str_add(ft_strdup(""), ft_strdup(str));
-	new = ft_str_add(new, ft_itoa(g_shell.ret));
-	str[*i] = '$';
-	new = ft_str_add(new, ft_strdup(&str[*i + 2]));
-	ft_strdel(&str);
-	return (new);
-}
-
-int			ft_exportable_char(char c, int first)
-{
-	if (ft_isalpha(c) || c == '_' || (ft_isdigit(c) && !first))
-		return (1);
-	return (0);
-}
-
-int			ft_check_replace_var(char *str, int *i, int *save, int *k)
+int			ft_check_replace_var(char *str, int *i)
 {
 	char	*tmp;
 
-	*save = *i;
-	if (g_shell.check && str[*i + 1] && (str[*i + 1] == '"' || str[*i + 1] == 39))
+	if (g_shell.check && str[*i + 1] && (str[*i + 1] == '"' ||
+															str[*i + 1] == 39))
 		return ((*i += 1));
-	if (!g_shell.check && str[*i + 1] && (str[*i + 1] == '"' || str[*i + 1] == 39))
+	if (!g_shell.check && str[*i + 1] && (str[*i + 1] == '"' ||
+															str[*i + 1] == 39))
 	{
 		tmp = ft_del_char(str, *i);
-		ft_strdel(&str);
-		str = ft_strdup(tmp);
-		ft_strdel(&tmp);
+		ft_switch_word(&str, &tmp);
 		return (1);
 	}
 	if (str[*i + 1] && str[*i + 1] == '$')
@@ -53,16 +31,11 @@ int			ft_check_replace_var(char *str, int *i, int *save, int *k)
 	if (str[*i + 1] && !ft_exportable_char(str[*i + 1], 1))
 	{
 		tmp = ft_del_char(str, *i);
-		ft_strdel(&str);
-		str = ft_strdup(tmp);
-		ft_strdel(&tmp);
+		ft_switch_word(&str, &tmp);
 		tmp = ft_del_char(str, *i);
-		ft_strdel(&str);
-		str = ft_strdup(tmp);
-		ft_strdel(&tmp);
+		ft_switch_word(&str, &tmp);
 		return (1);
 	}
-	*k = *i;
 	return (0);
 }
 
@@ -84,7 +57,6 @@ char		*ft_get_var_name(char *buf)
 
 char		*ft_replace_var(char *str, int *i)
 {
-	int		save;
 	int		pos;
 	char	*new;
 	char	*word;
@@ -92,7 +64,7 @@ char		*ft_replace_var(char *str, int *i)
 
 	if (str[*i + 1] && str[*i + 1] == '?')
 		return (ft_last_ret(str, i));
-	if (ft_check_replace_var(str, i, &save, &pos))
+	if (ft_check_replace_var(str, i))
 		return (str);
 	word = ft_get_var_name(&str[*i]);
 	word = ft_str_add(word, ft_strdup("="));
@@ -102,9 +74,7 @@ char		*ft_replace_var(char *str, int *i)
 		while (++pos < (int)ft_strlen(word))
 		{
 			tmp = ft_del_char(new, *i);
-			ft_strdel(&new);
-			new = ft_strdup(tmp);
-			ft_strdel(&tmp);
+			ft_switch_word(&new, &tmp);
 		}
 	}
 	else

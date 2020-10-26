@@ -6,7 +6,7 @@
 /*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 18:35:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/24 14:03:57 by lucas            ###   ########.fr       */
+/*   Updated: 2020/10/26 16:50:18 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int					ft_try_cmd(char *buf);
  ** env_var.c
 */
 char				*ft_last_ret(char *str, int *i);
-int					ft_check_replace_var(char *str, int *i, int *save, int *k);
+int					ft_check_replace_var(char *str, int *i);
 char				*ft_replace_var(char *str, int *i);
 char				*ft_get_env_var(char *str);
 void				ft_check_env_var(void);
@@ -183,9 +183,8 @@ int					ft_check_exit(char *buf);
 /*
  ** export.c
 */
-void				ft_add_var(char *buf, char *word, int start);
-char				*ft_switch_word(char *word);
-int					ft_incremente_export(char *word);
+char				*ft_add_var(char *word, int start);
+void				ft_switch_word(char **word, char **tmp);
 int					ft_export(char *buf);
 
 /*
@@ -232,8 +231,9 @@ void				ft_add_split(char *buf, char **av, char splitter);
 void				ft_skip_quote(char *buf, int *i);
 int					ft_len_word_with_quote(char *buf);
 char				*ft_get_word_with_quote(char *buf);
-int					ft_avlen(char **env);
-char				**ft_avdup(char **env);
+void				ft_switch_word(char **word, char **tmp);
+int					ft_incremente_export(char *word);
+void				ft_incremente_start(char *word, int *start, int init);
 
 /*
  ** free.c

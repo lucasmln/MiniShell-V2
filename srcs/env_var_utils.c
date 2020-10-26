@@ -26,22 +26,7 @@ int			ft_check_except_env(char *str, int *i)
 	}
 	return (0);
 }
-/*
-char		*ft_inexist_var(char *str, int *i)
-{
-	char	*new;
 
-//	str[save] = '\0';
-	new = ft_strdup(str);
-	*i += 1;
-	str[save] = '$';
-	if (c != '\0')
-		new = ft_str_add(new, ft_strdup(&c));
-	if (c != '\0')
-		new = ft_str_add(new, ft_strdup(&str[*i + 1]));
-	return (new);
-}
-*/
 char		*ft_copy_env_var_without_quote(char *var)
 {
 	char	*new;
@@ -78,4 +63,25 @@ char		*ft_exist_var(char *str, char *word, int pos, int *i)
 	new = ft_str_add(new, var);
 	new = ft_str_add(new, ft_strdup(&str[*i + ft_strlen(word)]));
 	return (new);
+}
+
+char		*ft_last_ret(char *str, int *i)
+{
+	char	*new;
+
+	str[*i] = '\0';
+	new = NULL;
+	new = ft_str_add(ft_strdup(""), ft_strdup(str));
+	new = ft_str_add(new, ft_itoa(g_shell.ret));
+	str[*i] = '$';
+	new = ft_str_add(new, ft_strdup(&str[*i + 2]));
+	ft_strdel(&str);
+	return (new);
+}
+
+int			ft_exportable_char(char c, int first)
+{
+	if (ft_isalpha(c) || c == '_' || (ft_isdigit(c) && !first))
+		return (1);
+	return (0);
 }
