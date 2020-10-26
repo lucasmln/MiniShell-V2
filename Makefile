@@ -42,9 +42,7 @@ HEADER_DIR		=  -I./includes/minishell.h
 $(NAME) :		$(OBJ)
 				@make -C libft
 				@make -C ft_printf
-				@mv libft/libft.a ./lib
-				@mv ft_printf/libftprintf.a lib/
-				$(CC) $(OBJ) lib/libftprintf.a lib/libft.a  -ltermcap -o $(NAME)
+				$(CC) $(OBJ) ft_printf/libftprintf.a libft/libft.a  -ltermcap -o $(NAME)
 
 LIBFT			= libft
 
@@ -58,7 +56,6 @@ clean :
 fclean :
 				@make -C libft fclean
 				@make -C ft_printf fclean
-				@rm -f lib/*.a
 				@rm -f $(ROAD_O)
 				@rm -f $(NAME)
 
