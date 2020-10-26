@@ -6,7 +6,7 @@
 /*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 11:25:04 by jvaquer           #+#    #+#             */
-/*   Updated: 2020/10/23 00:56:48 by jvaquer          ###   ########.fr       */
+/*   Updated: 2020/10/26 22:39:53 by jvaquer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int			ft_setup_main(const char **env, t_term *term, t_reader *r,
 	r->tab = 0;
 	signal(SIGINT, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (tcgetattr(0, &term->backup) == -1)
 		return (0);
 	if (tcgetattr(0, &term->set) == -1)

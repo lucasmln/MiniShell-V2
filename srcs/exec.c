@@ -6,7 +6,7 @@
 /*   By: jvaquer <jvaquer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 14:53:16 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/10/23 01:00:18 by jvaquer          ###   ########.fr       */
+/*   Updated: 2020/10/26 22:46:08 by jvaquer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int			ft_exec_cmd(t_exe *ex, int find)
 	{
 		signal(SIGTERM, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		close(g_shell.pip.id[g_shell.pip.i][0]);
 		if (g_shell.in.len > 0)
 			dup2(g_shell.in.fd[g_shell.in.len - 1], STDIN_FILENO);
@@ -56,8 +57,7 @@ int			ft_exec_cmd(t_exe *ex, int find)
 		exit(execve(ex->full_cmd, ex->argv, g_shell.env));
 	}
 	close(g_shell.pip.id[g_shell.pip.i][1]);
-	if (!find)
-		ft_free_av(ex->argv);
+	!find ? ft_free_av(ex->argv) : 0;
 	ft_incremente_pip_and_pid(ex);
 	return (find);
 }
